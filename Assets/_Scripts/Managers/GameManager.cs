@@ -1,6 +1,8 @@
 using Cinemachine;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
         else
             Destroy(Instance);
+
+        SpawnPlayer();
     }
     #endregion
 
@@ -25,16 +29,10 @@ public class GameManager : MonoBehaviour
 
     private GameObject spawnedPlayer;
 
-    public Action<GameObject> OnPlayerSpawn;
-    public Action<GameObject> OnPlayerDespawn;
+    public Action OnPlayerSpawn;
+    public Action OnPlayerDespawn;
     #endregion
 
-    #region Init
-    private void Start()
-    {
-
-    }
-    #endregion
 
     #region Player Spawner
     public void SpawnPlayer()
@@ -53,14 +51,14 @@ public class GameManager : MonoBehaviour
         PlayerController controller = go.GetComponent<PlayerController>();
         controller.OnPlayerKilled += DespawnPlayer;
 
-        OnPlayerSpawn?.Invoke(go);
+        OnPlayerSpawn?.Invoke();
     }
 
     public void DespawnPlayer()
     {
         if (spawnedPlayer == null) return;
 
-        OnPlayerDespawn?.Invoke(spawnedPlayer);
+        OnPlayerDespawn?.Invoke();
 
         freeLookCamera.Follow = null;
         freeLookCamera.LookAt = null;

@@ -8,4 +8,8 @@ public static class StringData
     public static readonly string PlayerTag = "Player";
     public static readonly string EnemyTag = "Enemy";
     public static readonly string IsAttackingAnimatorParam = "IsAttacking";
+
+    // Scene Names
+    public static readonly string MainMenuScene = "MainMenuScene";
+    public static readonly string GameScene = "GameScene";
 }

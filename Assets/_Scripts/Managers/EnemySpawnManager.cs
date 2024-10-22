@@ -7,7 +7,6 @@ public class EnemySpawnManager : MonoBehaviour
     [SerializeField] private List<EnemySpawner> enemySpawners = new List<EnemySpawner>();
     [SerializeField] private float spawnInterval = 5f; // Interval between spawns
     private float spawnTimer;
-    private bool canSpawn = false;
     #endregion
 
     #region Init & Update
@@ -16,21 +15,17 @@ public class EnemySpawnManager : MonoBehaviour
         GameManager.Instance.OnPlayerSpawn += InitSpawner;
         GameManager.Instance.OnPlayerDespawn += ResetSpawner;
     }
-    private void InitSpawner(GameObject go)
+    private void InitSpawner()
     {
-        canSpawn = true;
         spawnTimer = spawnInterval;
     }
-    private void ResetSpawner(GameObject go)
+    private void ResetSpawner()
     {
-        canSpawn = false;
         DespawnEnemies();
     }
 
     private void Update()
     {
-        if (!canSpawn) return;
-
         // Countdown for spawning
         spawnTimer -= Time.deltaTime;
 

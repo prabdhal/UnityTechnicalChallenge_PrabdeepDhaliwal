@@ -28,13 +28,8 @@ public class PlayerHud : BasicHud
     #region Init & Update
     private void Start()
     {
-        GameManager.Instance.OnPlayerSpawn += Init;
-    }
-    public void Init(GameObject playerObj)
-    {
-        target = playerObj;
-        combat = target.GetComponent<PlayerCombat>();
-        stats = target.GetComponent<CharacterStats>();
+        combat = FindObjectOfType<PlayerCombat>();
+        stats = combat.GetComponent<CharacterStats>();
 
         stats.OnHealthChange += UpdateHealthUI;
         stats.OnManaChange += UpdateManaUI;
