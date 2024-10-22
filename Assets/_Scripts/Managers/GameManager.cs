@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
             freeLookCamera.LookAt = spawnedPlayer.transform;
         }
 
+        PlayerController controller = go.GetComponent<PlayerController>();
+        controller.OnPlayerKilled += DespawnPlayer;
+
         OnPlayerSpawn?.Invoke(go);
     }
 
@@ -63,6 +66,16 @@ public class GameManager : MonoBehaviour
         freeLookCamera.LookAt = null;
         Destroy(spawnedPlayer);
         spawnedPlayer = null;
+    }
+    #endregion
+
+    #region Restart Game
+    public void RestartGame()
+    {
+        Debug.Log("GameManager - Restart");
+        DespawnPlayer();
+
+        Invoke("SpawnPlayer", 1f);
     }
     #endregion
 }

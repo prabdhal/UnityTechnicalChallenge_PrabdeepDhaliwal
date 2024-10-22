@@ -14,7 +14,7 @@ public class EnemySpawnManager : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.OnPlayerSpawn += InitSpawner;
-        GameManager.Instance.OnPlayerDespawn += InitSpawner;
+        GameManager.Instance.OnPlayerDespawn += ResetSpawner;
     }
     private void InitSpawner(GameObject go)
     {

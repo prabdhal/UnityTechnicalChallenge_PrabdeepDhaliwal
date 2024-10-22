@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
     #region Init & Update
     private void Start()
     {
-        GameManager GameManager = GameManager.Instance;
+        GameManager = GameManager.Instance;
         GameManager.OnPlayerSpawn += SetupOnPauseEvent;     // Once player spawns, add pausing to PlayerInputManager pause event 
         GameManager.OnPlayerDespawn += OnGameOver;     // Once player despawns, display GameOverMenu
 
@@ -74,7 +74,7 @@ public class UIManager : MonoBehaviour
         resumeButton.onClick.AddListener(OnPause);
         pauseMenuQuitButton.onClick.AddListener(OnQuit);
 
-        retryButton.onClick.AddListener(OnPlay);
+        retryButton.onClick.AddListener(OnRestart);
         pauseMenuQuitButton.onClick.AddListener(OnQuit);
 
         HideAll();
@@ -112,6 +112,12 @@ public class UIManager : MonoBehaviour
 
         TogglePlayerHud(true);
     }
+    private void OnRestart()
+    {
+        GameManager.RestartGame();
+
+        OnPlay();
+    }
     private void OnControls()
     {
         HideAll();
@@ -124,7 +130,8 @@ public class UIManager : MonoBehaviour
     // Fire on player despawn / death
     private void OnGameOver(GameObject go)
     {
-        OnReturnToMainMenu();
+        HideAll();
+        ToggleGameOverMenu(true);
     }
     private void OnReturnToMainMenu()
     {
