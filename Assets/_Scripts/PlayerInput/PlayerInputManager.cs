@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,19 +12,23 @@ public class PlayerInputManager : MonoBehaviour
     private InputAction jumpAction;
     private InputAction diveAction;
     private InputAction interactAction;
-    private InputAction basicAttack;
-    private InputAction specialAbility;
+    private InputAction basicAttackAction;
+    private InputAction specialAbilityAction;
+    private InputAction pauseAction;
+
+    public event Action OnPauseAction;
 
     public Vector2 MovementInput => movementAction.ReadValue<Vector2>();
     public Vector2 LookInput => lookAction.ReadValue<Vector2>();
     public bool IsJumpPressed => jumpAction.triggered;
     public bool IsDivePressed => diveAction.triggered;
     public bool IsInteractPressed => interactAction.triggered;
-    public bool BasicAttackPressed => basicAttack.triggered;
-    public bool SpecialAbilityPressed => specialAbility.triggered;
+    public bool BasicAttackPressed => basicAttackAction.triggered;
+    public bool SpecialAbilityPressed => specialAbilityAction.triggered;
+    public bool IsPaused => pauseAction.triggered;
     #endregion
 
-    #region Init
+    #region Init & Update
     private void Awake()
     {
         playerInputActions = new PlayerInputActions();
@@ -33,10 +38,16 @@ public class PlayerInputManager : MonoBehaviour
         jumpAction = playerInputActions.FindAction("Jump");
         diveAction = playerInputActions.FindAction("Dive");
         interactAction = playerInputActions.FindAction("Interact");
-        basicAttack = playerInputActions.FindAction("BasicAttack"); ;
-        specialAbility = playerInputActions.FindAction("SpecialAbility");
+        basicAttackAction = playerInputActions.FindAction("BasicAttack"); ;
+        specialAbilityAction = playerInputActions.FindAction("SpecialAbility");
+        pauseAction = playerInputActions.FindAction("Pause");
 
         Debug.Log("Awake inputs");
+    }
+    private void Update()
+    {
+        if (IsPaused)
+            OnPauseAction?.Invoke();
     }
     #endregion
 
@@ -48,8 +59,9 @@ public class PlayerInputManager : MonoBehaviour
         jumpAction.Enable();
         diveAction.Enable();
         interactAction.Enable();
-        basicAttack.Enable();
-        specialAbility.Enable();
+        basicAttackAction.Enable();
+        specialAbilityAction.Enable();
+        pauseAction.Enable();
         Debug.Log("Enabled inputs");
     }
     private void OnDisable()
@@ -59,8 +71,9 @@ public class PlayerInputManager : MonoBehaviour
         jumpAction.Disable();
         diveAction.Disable();
         interactAction.Disable();
-        basicAttack.Disable();
-        specialAbility.Disable();
+        basicAttackAction.Disable();
+        specialAbilityAction.Disable();
+        pauseAction.Disable();
         Debug.Log("Disabled inputs");
     }
     #endregion

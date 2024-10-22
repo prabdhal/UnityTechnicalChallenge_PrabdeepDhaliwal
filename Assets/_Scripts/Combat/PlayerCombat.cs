@@ -5,6 +5,7 @@ public class PlayerCombat : MonoBehaviour
     #region Fields
     [SerializeField]
     private Ability[] abilities;
+    public Ability[] Abilities => abilities;
 
     private Animator anim;
     private CharacterStats stats;

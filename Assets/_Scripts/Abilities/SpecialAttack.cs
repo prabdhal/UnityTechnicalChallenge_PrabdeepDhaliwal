@@ -19,7 +19,7 @@ public class SpecialAttack : Ability
 
     private void SpawnProjectile()
     {
-        GameObject go = Instantiate(projectilePrefab, spawnPos.position, Quaternion.identity);
+        GameObject go = Instantiate(projectilePrefab, spawnPos.position, spawnPos.rotation);
         ProjectileCollider proj = go.GetComponent<ProjectileCollider>();
         proj.Init(ownerStats, this);
     }

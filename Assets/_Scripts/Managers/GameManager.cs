@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     private CinemachineFreeLook freeLookCamera; 
 
     private GameObject spawnedPlayer;
+
+    public Action<GameObject> OnPlayerSpawn;
     #endregion
 
     #region Init
@@ -45,6 +48,8 @@ public class GameManager : MonoBehaviour
             freeLookCamera.Follow = spawnedPlayer.transform;
             freeLookCamera.LookAt = spawnedPlayer.transform;
         }
+          
+        OnPlayerSpawn?.Invoke(go);
     }
     #endregion
 }
