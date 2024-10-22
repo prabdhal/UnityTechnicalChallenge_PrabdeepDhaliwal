@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     private void Awake()
     {
-        if (Instance == null) 
+        if (Instance == null)
             Instance = this;
         else
             Destroy(Instance);
@@ -21,11 +21,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform spawnPos;
     [SerializeField]
-    private CinemachineFreeLook freeLookCamera; 
+    private CinemachineFreeLook freeLookCamera;
 
     private GameObject spawnedPlayer;
 
     public Action<GameObject> OnPlayerSpawn;
+    public Action<GameObject> OnPlayerDespawn;
     #endregion
 
     #region Init
@@ -48,8 +49,20 @@ public class GameManager : MonoBehaviour
             freeLookCamera.Follow = spawnedPlayer.transform;
             freeLookCamera.LookAt = spawnedPlayer.transform;
         }
-          
+
         OnPlayerSpawn?.Invoke(go);
+    }
+
+    public void DespawnPlayer()
+    {
+        if (spawnedPlayer == null) return;
+
+        OnPlayerDespawn?.Invoke(spawnedPlayer);
+
+        freeLookCamera.Follow = null;
+        freeLookCamera.LookAt = null;
+        Destroy(spawnedPlayer);
+        spawnedPlayer = null;
     }
     #endregion
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,12 +21,13 @@ public class PlayerInputManager : MonoBehaviour
 
     public Vector2 MovementInput => movementAction.ReadValue<Vector2>();
     public Vector2 LookInput => lookAction.ReadValue<Vector2>();
-    public bool IsJumpPressed => jumpAction.triggered;
-    public bool IsDivePressed => diveAction.triggered;
-    public bool IsInteractPressed => interactAction.triggered;
-    public bool BasicAttackPressed => basicAttackAction.triggered;
-    public bool SpecialAbilityPressed => specialAbilityAction.triggered;
+    public bool IsJumpPressed => jumpAction.triggered && !IsGamePaused;
+    public bool IsDivePressed => diveAction.triggered && !IsGamePaused;
+    public bool IsInteractPressed => interactAction.triggered && !IsGamePaused;
+    public bool BasicAttackPressed => basicAttackAction.triggered && !IsGamePaused;
+    public bool SpecialAbilityPressed => specialAbilityAction.triggered && !IsGamePaused;
     public bool IsPaused => pauseAction.triggered;
+    public bool IsGamePaused => Time.timeScale == 0;
     #endregion
 
     #region Init & Update

@@ -1,37 +1,38 @@
 using System;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
     #region Fields
-    private int currentHealth;
-    public int CurrentHealth => currentHealth;
+    private float currentHealth;
+    public float CurrentHealth => currentHealth;
     [SerializeField]
-    private int maxHealth;
-    public int MaxHealth => maxHealth;
+    private float maxHealth;
+    public float MaxHealth => maxHealth;
 
-    private int currentMana;
-    public int Mana => currentMana;
+    private float currentMana;
+    public float Mana => currentMana;
     [SerializeField]
-    private int maxMana;
-    public int MaxMana => maxMana;
-
-    [SerializeField]
-    private int attackDamage;
-    public int AttackDamage => attackDamage;
+    private float maxMana;
+    public float MaxMana => maxMana;
 
     [SerializeField]
-    private int magicDamage;
-    public int MagicDamage => magicDamage;
+    private float attackDamage;
+    public float AttackDamage => attackDamage;
 
     [SerializeField]
-    private int armor;
-    public int Armor => armor;
+    private float magicDamage;
+    public float MagicDamage => magicDamage;
 
     [SerializeField]
-    private int magicResistance;
-    public int MagicResistance => magicResistance;
+    private float armor;
+    public float Armor => armor;
+
+    [SerializeField]
+    private float magicResistance;
+    public float MagicResistance => magicResistance;
 
     [SerializeField]
     private float movementSpeed;
@@ -42,8 +43,8 @@ public class CharacterStats : MonoBehaviour
     public float AttackSpeed => attackSpeed;
 
     // Events
-    public Action<int, int> OnHealthChange;
-    public Action<int, int> OnManaChange;
+    public Action<float, float> OnHealthChange;
+    public Action<float, float> OnManaChange;
     #endregion
 
     #region Init
@@ -52,16 +53,21 @@ public class CharacterStats : MonoBehaviour
         currentHealth = maxHealth;
         currentMana = MaxMana;
     }
+    private void Start()
+    {
+        OnHealthChange?.Invoke(currentHealth, maxHealth);
+        OnManaChange?.Invoke(currentMana, maxMana);
+    }
     #endregion
 
     #region Health
-    public void InflictDamage(int damage)
+    public void InflictDamage(float damage)
     {
         currentHealth -= damage;
 
         OnHealthChange?.Invoke(currentHealth, maxHealth);
     }
-    public void HealHealth(int damage)
+    public void HealHealth(float damage)
     {
         currentHealth += damage;
 
@@ -70,7 +76,7 @@ public class CharacterStats : MonoBehaviour
     #endregion
 
     #region Mana
-    public bool HasMana(int mana)
+    public bool HasMana(float mana)
     {
         if (currentMana < mana)
             return false;
@@ -78,7 +84,7 @@ public class CharacterStats : MonoBehaviour
         ConsumeMana(mana);
         return true;
     }
-    private void ConsumeMana(int mana)
+    private void ConsumeMana(float mana)
     {
         currentMana -= mana;
 

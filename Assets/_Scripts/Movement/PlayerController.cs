@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -21,6 +22,11 @@ public class PlayerController : MonoBehaviour
 
     private float turnSmoothVelocity;
     public float turnSmoothTime = 0.1f;
+
+    private bool isDead = false;
+    public bool IsDead => isDead;
+
+    public Action OnPlayerKilled;
     #endregion
 
     #region Init & Update
@@ -35,7 +41,14 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        MovePlayer();
+        if (stats.IsDead() && !isDead)
+        {
+            isDead = true;
+            Death();
+            return;
+        }
+
+        Movement();
         RotatePlayerWithCamera();
         ApplyGravity();
 
@@ -44,7 +57,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Movement
-    private void MovePlayer()
+    private void Movement()
     {
         // Get input for movement
         float horizontal = inputManager.MovementInput.x;
@@ -100,6 +113,15 @@ public class PlayerController : MonoBehaviour
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+    }
+    #endregion
+
+    #region Death
+    private void Death()
+    {
+        OnPlayerKilled?.Invoke();
+
+        Destroy(gameObject);
     }
     #endregion
 }

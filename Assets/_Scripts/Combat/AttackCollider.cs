@@ -34,7 +34,7 @@ public class AttackCollider : MonoBehaviour
             
             // Get ability damage
             Vector2 abilityDmg = ability.ReturnAbitityDamage();
-
+            Debug.Log($"ability attack damage: " + abilityDmg.x + " and magic damage: " + abilityDmg.y);
             // Apply damage to target, taking into account armor and magic resistance
             ApplyDamage(abilityDmg, stats);
 
@@ -48,7 +48,8 @@ public class AttackCollider : MonoBehaviour
         float magicDamage = Mathf.Clamp(damages.y - stats.MagicDamage, 0, Mathf.Infinity);
 
         float totalDamage = physicalDamage + magicDamage;
-
+        Debug.Log($"Apply damage after defence - attack damage: " + physicalDamage + " and magic damage: " + magicDamage + " total damage: " + totalDamage);
+        
         stats.InflictDamage((int)totalDamage);
     }
     #endregion

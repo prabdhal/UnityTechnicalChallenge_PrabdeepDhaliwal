@@ -1,33 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class EnemyCombat : MonoBehaviour
+public class EnemyCombat : Combat
 {
     #region Fields
-    [SerializeField]
-    private Ability[] attacks;
 
-    private Animator anim;
-    private CharacterStats stats;
     #endregion
 
     #region Init & Update
-    private void Start()
+    protected override void Start()
     {
-        anim = GetComponent<Animator>();
-
-        foreach (Ability att in attacks) 
-        {
-            att.Init(anim, stats);
-        }
+        base.Start();
     }
 
-    private void Update()
+    protected override void Update()
     {
-        foreach (Ability att in attacks)
+        base.Update();
+
+        HandleCombatInputs();
+    }
+    #endregion
+
+    #region Ability Handler
+    protected override void HandleCombatInputs()
+    {
+        canAttack = !anim.GetBool(StringData.IsAttackingAnimatorParam);
+
+        if (!canAttack) return;
+
+        for (int i = 0; i < abilities.Length; i++)
         {
-            att.Tick();
+            abilities[0].Execute();
+            abilities[1].Execute();
         }
     }
     #endregion

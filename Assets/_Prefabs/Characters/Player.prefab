@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5673713245170709162}
   - component: {fileID: 4757236799058399152}
   - component: {fileID: 6264728767228797065}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Hair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6720988662623095802}
   - component: {fileID: 2936959995958283311}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SpecialAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,6 +151,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 0}
   animationName: SpecialAttack
+  stats:
+    flatAttackDamage: 0
+    baseAttackDamageScaling: 0
+    flatMagicDamage: 10
+    baseMagicDamageScaling: 1
   abilityCooldown: 5
   manaCost: 10
   projectilePrefab: {fileID: 1246318884732934483, guid: e72e8bbb1253e084b838d3a2b6b013d3, type: 3}
@@ -164,7 +169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6453197325391344364}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SpecialAttackSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -197,7 +202,7 @@ GameObject:
   - component: {fileID: 6856467169176144150}
   - component: {fileID: 3268348809179185416}
   - component: {fileID: 789941578850045983}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +270,7 @@ GameObject:
   - component: {fileID: 7108454982339463951}
   - component: {fileID: 6773373233599544860}
   - component: {fileID: 2030014461598432679}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerModel
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -371,7 +376,7 @@ GameObject:
   m_Component:
   - component: {fileID: 440289307021662462}
   - component: {fileID: 5844203615431934829}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BasicAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,6 +412,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 789941578850045983}
   animationName: BasicAttack
+  stats:
+    flatAttackDamage: 0
+    baseAttackDamageScaling: 1
+    flatMagicDamage: 0
+    baseMagicDamageScaling: 0
   abilityCooldown: 1
   manaCost: 0
 --- !u!1 &3570981801449721919
@@ -418,7 +428,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8608926831875899471}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AbilityHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +467,7 @@ GameObject:
   - component: {fileID: 6912707266112147680}
   - component: {fileID: 1236687793236222788}
   - component: {fileID: 1889129679640560064}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -641,8 +651,7 @@ GameObject:
   - component: {fileID: 1133264288978702348}
   - component: {fileID: 6223674781767185234}
   - component: {fileID: 747611657575058407}
-  - component: {fileID: 5671692379373968396}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -715,27 +724,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5671692379373968396
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6438817166142042228}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9210233611835295018
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,7 +736,7 @@ GameObject:
   - component: {fileID: 5027562591700616973}
   - component: {fileID: 5001513673460857685}
   - component: {fileID: 4297460225396457176}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

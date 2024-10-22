@@ -2,13 +2,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHud : MonoBehaviour
+public class PlayerHud : BasicHud
 {
     #region Fields
     [SerializeField]
-    private Image healthFill;
-    [SerializeField]
-    private TextMeshProUGUI healthText;
+    protected TextMeshProUGUI healthText;
+
     [SerializeField]
     private Image manaFill;
     [SerializeField]
@@ -24,7 +23,6 @@ public class PlayerHud : MonoBehaviour
     private TextMeshProUGUI specialAttackCooldownText;
 
     private PlayerCombat combat;
-    private CharacterStats stats;
     #endregion
 
     #region Init & Update
@@ -34,9 +32,9 @@ public class PlayerHud : MonoBehaviour
     }
     public void Init(GameObject playerObj)
     {
-        Debug.Log("PlayerHud Init");
-        combat = playerObj.GetComponent<PlayerCombat>();
-        stats = playerObj.GetComponent<CharacterStats>();
+        target = playerObj;
+        combat = target.GetComponent<PlayerCombat>();
+        stats = target.GetComponent<CharacterStats>();
 
         stats.OnHealthChange += UpdateHealthUI;
         stats.OnManaChange += UpdateManaUI;
@@ -52,13 +50,14 @@ public class PlayerHud : MonoBehaviour
     #endregion
 
     #region UI Events
-    private void UpdateHealthUI(int curHP, int maxHp)
+    protected override void UpdateHealthUI(float curHP, float maxHp)
     {
         healthText.text = $"{curHP}/{maxHp}";
 
         healthFill.fillAmount = curHP / maxHp;
     }
-    private void UpdateManaUI(int curMana, int maxMana)
+
+    private void UpdateManaUI(float curMana, float maxMana)
     {
         manaText.text = $"{curMana}/{maxMana}";
 

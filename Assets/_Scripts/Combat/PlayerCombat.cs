@@ -1,52 +1,30 @@
 using UnityEngine;
 
-public class PlayerCombat : MonoBehaviour
+public class PlayerCombat : Combat
 {
     #region Fields
-    [SerializeField]
-    private Ability[] abilities;
-    public Ability[] Abilities => abilities;
-
-    private Animator anim;
-    private CharacterStats stats;
     private PlayerInputManager inputManager;
-
-    private bool canAttack;
     #endregion
 
     #region Init & Update
-    private void Start()
+    protected override void Start()
     {
-        anim = GetComponentInChildren<Animator>();
-        stats = GetComponent<CharacterStats>();
+        base.Start();
         inputManager = GetComponent<PlayerInputManager>();
-
-        foreach (Ability att in abilities)
-        {
-            att.Init(anim, stats);
-        }
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (stats.IsDead()) return;
+        base.Update();
 
-        HandleAbilityTicks();
         HandleCombatInputs();
     }
     #endregion
 
     #region Ability Handler
-    private void HandleAbilityTicks()
+    protected override void HandleCombatInputs()
     {
-        foreach (Ability att in abilities)
-        {
-            att.Tick();
-        }
-    }
-    private void HandleCombatInputs()
-    {
-        canAttack = !anim.GetBool("IsAttacking");
+        canAttack = !anim.GetBool(StringData.IsAttackingAnimatorParam);
 
         if (!canAttack) return;
 

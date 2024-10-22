@@ -120,5 +120,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTag: Enemy
   range: 10
-  speed: 10
-  deathTimer: 3
+  speed: 15
+  deathTimer: 5

@@ -1,13 +1,15 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public struct AbiltyStats
 {
     public int flatAttackDamage;
-    [Range(0, 1)]
+    [Range(0, 1f)]
     public float baseAttackDamageScaling;
 
     public int flatMagicDamage;
-    [Range(0, 1)]
+    [Range(0, 1f)]
     public float baseMagicDamageScaling;
 }
 public abstract class Ability : MonoBehaviour

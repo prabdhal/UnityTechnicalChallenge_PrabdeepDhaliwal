@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     private void Awake()
     {
-        if (Instance == null) 
+        if (Instance == null)
             Instance = this;
         else
             Destroy(Instance);
@@ -21,7 +21,15 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Button playButton;
     [SerializeField]
+    private Button controlsButton;
+    [SerializeField]
     private Button quitButton;
+
+    [Header("Controls Menu UI")]
+    [SerializeField]
+    private GameObject controlsMenu;
+    [SerializeField]
+    private Button backButton;
 
     [Header("Pause Menu UI")]
     [SerializeField]
@@ -35,6 +43,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject playerHud;
 
+    [Header("Game Over UI")]
+    [SerializeField]
+    private GameObject gameOverMenu;
+    [SerializeField]
+    private Button retryButton;
+    [SerializeField]
+    private Button gamOverQuitButton;
+
     private PlayerInputManager playerInputManager;
     private GameManager GameManager;
 
@@ -46,17 +62,23 @@ public class UIManager : MonoBehaviour
     {
         GameManager GameManager = GameManager.Instance;
         GameManager.OnPlayerSpawn += SetupOnPauseEvent;     // Once player spawns, add pausing to PlayerInputManager pause event 
+        GameManager.OnPlayerDespawn += OnGameOver;     // Once player despawns, display GameOverMenu
 
         playButton.onClick.AddListener(OnPlay);
         playButton.onClick.AddListener(GameManager.SpawnPlayer);
+        controlsButton.onClick.AddListener(OnControls);
         quitButton.onClick.AddListener(OnQuit);
+
+        backButton.onClick.AddListener(OnReturnToMainMenu);
 
         resumeButton.onClick.AddListener(OnPause);
         pauseMenuQuitButton.onClick.AddListener(OnQuit);
 
+        retryButton.onClick.AddListener(OnPlay);
+        pauseMenuQuitButton.onClick.AddListener(OnQuit);
+
+        HideAll();
         ToggleMainMenu(true);
-        TogglePauseMenu(false);
-        TogglePlayerHud(false);
     }
     private void SetupOnPauseEvent(GameObject playerObj)
     {
@@ -77,22 +99,38 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region Button Events
+    // Fire on pause action trigger
+    public void OnPause()
+    {
+        bool toggle = !pauseMenu.activeInHierarchy;
+        TogglePauseMenu(toggle);
+    }
+
     private void OnPlay()
     {
-        ToggleMainMenu(false);
+        HideAll();
+
         TogglePlayerHud(true);
+    }
+    private void OnControls()
+    {
+        HideAll();
+        ToggleControlsMenu(true);
     }
     private void OnQuit()
     {
         Application.Quit();
     }
-
-    // Fire on pause action trigger
-    public void OnPause()
+    // Fire on player despawn / death
+    private void OnGameOver(GameObject go)
     {
-        bool toggle = !pauseMenu.activeInHierarchy;
+        OnReturnToMainMenu();
+    }
+    private void OnReturnToMainMenu()
+    {
+        HideAll();
 
-        TogglePauseMenu(toggle);
+        ToggleMainMenu(true);
     }
     #endregion
 
@@ -108,6 +146,22 @@ public class UIManager : MonoBehaviour
     public void TogglePlayerHud(bool display)
     {
         playerHud.SetActive(display);
+    }
+    public void ToggleGameOverMenu(bool display)
+    {
+        gameOverMenu.SetActive(display);
+    }
+    public void ToggleControlsMenu(bool display)
+    {
+        controlsMenu.SetActive(display);
+    }
+    public void HideAll()
+    {
+        ToggleMainMenu(false);
+        TogglePauseMenu(false);
+        TogglePlayerHud(false);
+        ToggleGameOverMenu(false);
+        ToggleControlsMenu(false);
     }
     #endregion
 }

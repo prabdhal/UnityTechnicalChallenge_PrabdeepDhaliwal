@@ -8,16 +8,18 @@ public class BasicAttack : Ability
             StartCooldown();
 
             EnableAttackCollider();
-            Invoke("DisableAttackCollider", 1f);
+            Invoke("DisableAttackCollider", 0.5f);
         }
     }
 
     private void EnableAttackCollider()
     {
+        if (attackCollider == null) return;
         attackCollider.gameObject.SetActive(true);
     }
     private void DisableAttackCollider()
     {
+        if (attackCollider == null) return;
         attackCollider.gameObject.SetActive(false);
     }
 }

@@ -1,18 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Combat : MonoBehaviour
+public abstract class Combat : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Fields
+    [SerializeField]
+    protected Ability[] abilities;
+    public Ability[] Abilities => abilities;
+
+    protected Animator anim;
+    protected CharacterStats stats;
+
+    protected bool canAttack;
+    #endregion
+
+    #region Init & Update
+    protected virtual void Start()
     {
-        
+        anim = GetComponentInChildren<Animator>();
+        stats = GetComponent<CharacterStats>();
+
+        foreach (Ability att in abilities)
+        {
+            att.Init(anim, stats);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-        
+        if (stats.IsDead()) return;
+
+        canAttack = !anim.GetBool("IsAttacking");
+        HandleAbilityTicks();
     }
+    #endregion
+
+    #region Ability Handler
+    private void HandleAbilityTicks()
+    {
+        foreach (Ability att in abilities)
+        {
+            att.Tick();
+        }
+    }
+    protected abstract void HandleCombatInputs();
+    #endregion
 }
