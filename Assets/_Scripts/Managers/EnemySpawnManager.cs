@@ -12,16 +12,11 @@ public class EnemySpawnManager : MonoBehaviour
     #region Init & Update
     private void Start()
     {
-        GameManager.Instance.OnPlayerSpawn += InitSpawner;
-        GameManager.Instance.OnPlayerDespawn += ResetSpawner;
+        spawnTimer = spawnInterval;
     }
     private void InitSpawner()
     {
         spawnTimer = spawnInterval;
-    }
-    private void ResetSpawner()
-    {
-        DespawnEnemies();
     }
 
     private void Update()

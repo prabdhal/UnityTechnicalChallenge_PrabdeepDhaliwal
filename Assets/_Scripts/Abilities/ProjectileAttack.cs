@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpecialAttack : Ability
+public class ProjectileAttack : Ability
 {
     [SerializeField]
     private GameObject projectilePrefab;
@@ -13,14 +13,17 @@ public class SpecialAttack : Ability
         {
             HandleAnimation();
             StartCooldown();
-            SpawnProjectile();
+
+            // Using animation events handler to fire projectile
+            //SpawnProjectile();
         }
     }
 
-    private void SpawnProjectile()
+    public void SpawnProjectile()
     {
         GameObject go = Instantiate(projectilePrefab, spawnPos.position, spawnPos.rotation);
         ProjectileCollider proj = go.GetComponent<ProjectileCollider>();
         proj.Init(ownerStats, this);
+        soundManager.PlaySpecialAbilitySound();
     }
 }

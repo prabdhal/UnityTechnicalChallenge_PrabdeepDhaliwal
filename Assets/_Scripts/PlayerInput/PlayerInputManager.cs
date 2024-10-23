@@ -43,8 +43,6 @@ public class PlayerInputManager : MonoBehaviour
         basicAttackAction = playerInputActions.FindAction("BasicAttack"); ;
         specialAbilityAction = playerInputActions.FindAction("SpecialAbility");
         pauseAction = playerInputActions.FindAction("Pause");
-
-        Debug.Log("Awake inputs");
     }
     private void Update()
     {
@@ -64,7 +62,6 @@ public class PlayerInputManager : MonoBehaviour
         basicAttackAction.Enable();
         specialAbilityAction.Enable();
         pauseAction.Enable();
-        Debug.Log("Enabled inputs");
     }
     private void OnDisable()
     {
@@ -76,7 +73,6 @@ public class PlayerInputManager : MonoBehaviour
         basicAttackAction.Disable();
         specialAbilityAction.Disable();
         pauseAction.Disable();
-        Debug.Log("Disabled inputs");
     }
     #endregion
 }

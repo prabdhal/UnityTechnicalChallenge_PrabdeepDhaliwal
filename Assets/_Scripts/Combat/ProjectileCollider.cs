@@ -5,8 +5,6 @@ public class ProjectileCollider : AttackCollider
     #region Fields
     [Header("Projectile Stats")]
     [SerializeField]
-    private float range;
-    [SerializeField]
     private float speed;
     [SerializeField]
     private float deathTimer;
@@ -41,7 +39,7 @@ public class ProjectileCollider : AttackCollider
     {
         float distanceFromStart = Vector3.Distance(startPos, transform.position);
 
-        if (deathTimer <= 0 || distanceFromStart > range)
+        if (deathTimer <= 0 || distanceFromStart > ability.AbilityStats.range)
             Destroy(gameObject);
         else
             deathTimer -= Time.deltaTime;

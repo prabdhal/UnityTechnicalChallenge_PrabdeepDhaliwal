@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
 
     private float turnSmoothVelocity;
-    public float turnSmoothTime = 0.1f;
+    public float turnSpeed;
 
     private bool isDead = false;
     public bool IsDead => isDead;
@@ -38,6 +38,9 @@ public class PlayerController : MonoBehaviour
         combat = GetComponent<PlayerCombat>();
         anim = GetComponentInChildren<Animator>();
         cameraTransform = Camera.main.transform;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     private void Update()
     {
@@ -64,13 +67,17 @@ public class PlayerController : MonoBehaviour
         float vertical = inputManager.MovementInput.y;
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
+        anim.SetFloat(StringData.MoveSpeedParam, direction.magnitude);
+
         if (direction.magnitude >= 0.1f)
         {
             // Calculate the target angle based on camera direction
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 
-            // Rotate player towards the target angle
+            // Instantly turn towards the target angle with some smoothing 
+            float angle = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, turnSpeed * Time.deltaTime);
+
+            // Apply the calculated angle for rotation
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             // Move the player

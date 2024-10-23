@@ -5,6 +5,9 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     #region Fields
+    [SerializeField]
+    private GameObject container;       // Root gameobject of enemy
+
     [Header("Detection Settings")]
     [SerializeField]
     private Transform head;
@@ -14,6 +17,8 @@ public class EnemyController : MonoBehaviour
     private LayerMask detectionLayers; // Layers the enemy can detect (e.g., Player layer)
     [SerializeField]
     private LayerMask obstacleLayers; // Layers for obstacles (e.g., Walls)
+    [SerializeField]
+    private float stopppingDistance = 2f;
 
     [Header("Patrol Settings")]
     [SerializeField]
@@ -25,10 +30,12 @@ public class EnemyController : MonoBehaviour
     private float patrolSpeed => stats.MovementSpeed * patrolSpeedRatio;
     private float chaseSpeed => stats.MovementSpeed;
 
+
     private NavMeshAgent agent;
     private int currentPatrolIndex = 0;
     private GameObject player;
     private bool isPlayerDetected;
+    public bool CanAttack => isPlayerDetected;
     private bool isChasingPlayer;
 
     private Animator anim;
@@ -42,7 +49,7 @@ public class EnemyController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         stats = GetComponent<CharacterStats>();
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
 
         player = GameObject.FindGameObjectWithTag(StringData.PlayerTag);
 
@@ -67,16 +74,25 @@ public class EnemyController : MonoBehaviour
         if (player == null) return;
 
         float distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
+        anim.SetFloat(StringData.MoveSpeedParam, agent.speed);
 
         // Check if the player is within detection range and has a clear line of sight
         isPlayerDetected = IsPlayerDetected(distanceFromPlayer);
 
         if (isPlayerDetected)
         {
-            // If the player is detected and in sight, chase the player
-            isChasingPlayer = true;
-            agent.speed = chaseSpeed;
+            if (distanceFromPlayer <= stopppingDistance)
+            {
+                agent.speed = 0f;
+            }
+            else
+            {
+                // If the player is detected and in sight, chase the player
+                isChasingPlayer = true;
+                agent.speed = chaseSpeed;
+            }
             agent.SetDestination(player.transform.position);
+
         }
         else if (isChasingPlayer)
         {
@@ -100,6 +116,7 @@ public class EnemyController : MonoBehaviour
         if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) <= waypointAccuracy)
         {
             currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+            agent.speed = 0;
         }
 
         agent.speed = patrolSpeed;
@@ -112,14 +129,11 @@ public class EnemyController : MonoBehaviour
 
         // Perform a raycast to see if there is a clear line of sight to the player
         Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-        Debug.Log("IsPlayerDetected:?");
         if (Physics.Raycast(head.position, directionToPlayer, out RaycastHit hit, detectionRadius, detectionLayers | obstacleLayers))
         {
-            Debug.Log("IsPlayerDetected -- hitting: " + hit.collider.name);
             // Player is in sight 
             if (hit.collider.CompareTag(StringData.PlayerTag))
             {
-                Debug.Log("Player Detected! -- " + hit.collider.name);
                 return true;
             }
         }
@@ -133,7 +147,7 @@ public class EnemyController : MonoBehaviour
     {
         OnEnemyKilled?.Invoke(this);
 
-        Destroy(gameObject);
+        Destroy(container);
     }
     public void Kill()
     {

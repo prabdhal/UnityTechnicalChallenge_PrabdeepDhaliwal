@@ -2,8 +2,10 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public struct AbiltyStats
+public struct AbilityStats
 {
+    public float range;
+
     public int flatAttackDamage;
     [Range(0, 1f)]
     public float baseAttackDamageScaling;
@@ -22,7 +24,8 @@ public abstract class Ability : MonoBehaviour
 
     [Header("Ability Stats")]
     [SerializeField]
-    protected AbiltyStats stats;
+    protected AbilityStats abilityStats;
+    public AbilityStats AbilityStats => abilityStats;
     protected float cooldownTimer;
     public float CooldownTimer => cooldownTimer;
     [SerializeField]
@@ -37,11 +40,13 @@ public abstract class Ability : MonoBehaviour
 
     protected CharacterStats ownerStats;
     protected Animator anim;
+    protected SoundManager soundManager;
     #endregion
 
     #region Init & Tick
-    public void Init(Animator anim, CharacterStats stats)
+    public void Init(Animator anim, CharacterStats stats, SoundManager sound)
     {
+        this.soundManager = sound;
         this.anim = anim;
         ownerStats = stats;
         if (attackCollider != null)
@@ -64,8 +69,8 @@ public abstract class Ability : MonoBehaviour
     {
         // x = physical damage & y = magic damage
         Vector2 damages = new Vector2();
-        damages.x = stats.flatAttackDamage + (int)(ownerStats.AttackDamage * stats.baseAttackDamageScaling);
-        damages.y = stats.flatMagicDamage + (int)(ownerStats.MagicDamage * stats.baseMagicDamageScaling);
+        damages.x = abilityStats.flatAttackDamage + (int)(ownerStats.AttackDamage * abilityStats.baseAttackDamageScaling);
+        damages.y = abilityStats.flatMagicDamage + (int)(ownerStats.MagicDamage * abilityStats.baseMagicDamageScaling);
 
         return damages;
     }
