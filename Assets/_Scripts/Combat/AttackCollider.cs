@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class AttackCollider : MonoBehaviour
@@ -6,9 +7,12 @@ public class AttackCollider : MonoBehaviour
     #region Fields
     [SerializeField]
     protected string targetTag;
+    [SerializeField, Tooltip("Applies continuous damage overtime")]
+    private bool damageOnStay = false;
 
     protected CharacterStats ownerStats;
     protected Ability ability;
+    private Coroutine damageCoroutine;
 
     public Action OnHitTarget;
     #endregion
@@ -16,7 +20,11 @@ public class AttackCollider : MonoBehaviour
     #region Init
     private void Start()
     {
-        gameObject.SetActive(false);
+        // Keep attack collider on if attack is OnTriggerStay based
+        if (!damageOnStay)
+            gameObject.SetActive(false);
+        else
+            gameObject.SetActive(true);
     }
     public virtual void Init(CharacterStats stats, Ability ability)
     {
@@ -25,32 +33,64 @@ public class AttackCollider : MonoBehaviour
     }
     #endregion
 
-    #region Damage 
-    protected void OnTriggerEnter(Collider other)
+    #region OnTrigger
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(targetTag))
         {
             CharacterStats stats = other.GetComponent<CharacterStats>();
-            
+
             // Get ability damage
             Vector2 abilityDmg = ability.ReturnAbitityDamage();
-            Debug.Log($"ability attack damage: " + abilityDmg.x + " and magic damage: " + abilityDmg.y);
+
             // Apply damage to target, taking into account armor and magic resistance
             ApplyDamage(abilityDmg, stats);
 
             OnHitTarget?.Invoke();
+
+            // Start damage over time if applicable
+            if (damageOnStay)
+            {
+                if (damageCoroutine == null)
+                {
+                    damageCoroutine = StartCoroutine(ApplyDamageOverTime(stats, abilityDmg));
+                }
+            }
         }
     }
+    protected void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(targetTag))
+        {
+            // Stop the coroutine when the target exits
+            if (damageCoroutine != null)
+            {
+                StopCoroutine(damageCoroutine);
+                damageCoroutine = null; // Reset the coroutine reference
+            }
+        }
+    }
+    #endregion
 
+    #region Damage
     protected void ApplyDamage(Vector2 damages, CharacterStats stats)
     {
         float physicalDamage = Mathf.Clamp(damages.x - stats.Armor, 0, Mathf.Infinity);
         float magicDamage = Mathf.Clamp(damages.y - stats.MagicResistance, 0, Mathf.Infinity);
 
         float totalDamage = physicalDamage + magicDamage;
-        Debug.Log($"Apply damage after defence - attack damage: " + physicalDamage + " and magic damage: " + magicDamage + " total damage: " + totalDamage);
         
         stats.InflictDamage((int)totalDamage);
+    }
+
+    private IEnumerator ApplyDamageOverTime(CharacterStats stats, Vector2 damages)
+    {
+        while (true)
+        {
+            // Apply damage to target every second
+            ApplyDamage(damages, stats);
+            yield return new WaitForSeconds(1f);
+        }
     }
     #endregion
 }

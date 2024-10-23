@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 328336909}
   - component: {fileID: 328336908}
   - component: {fileID: 328336911}
+  - component: {fileID: 328336912}
   m_Layer: 6
   m_Name: Obstacle
   m_TagString: Untagged
@@ -172,7 +173,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -259,6 +260,27 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 2383055eeb47e3c498819b494e79c553, type: 2}
   m_BuildHeightMesh: 0
+--- !u!65 &328336912
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328336906}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.99999994, z: 1}
+  m_Center: {x: 0.0000009536743, y: 0, z: 0}
 --- !u!1 &369153236 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8198080596145555318, guid: 1e2b2bf6761781440aeef94996afe367, type: 3}
@@ -300,6 +322,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1399763617}
+  - {fileID: 543069991}
+  - {fileID: 1938579085}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &438648586
@@ -316,6 +340,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawners:
   - {fileID: 1399763616}
+  - {fileID: 543069992}
+  - {fileID: 1938579086}
   spawnInterval: 1
 --- !u!114 &470919975 stripped
 MonoBehaviour:
@@ -516,6 +542,54 @@ MonoBehaviour:
   AutoEnableInputs: 1
   XYAxis: {fileID: -5630151704836100654, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   ZAxis: {fileID: 0}
+--- !u!1 &543069990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 543069991}
+  - component: {fileID: 543069992}
+  m_Layer: 0
+  m_Name: DiscEnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &543069991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543069990}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.84, y: 1.46, z: -24.27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438648585}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &543069992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543069990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f8d30da3564af48867268707d89126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 1833878018336149898, guid: 006dcb7a46014584494c01a55d3a900e, type: 3}
+  spawnAreaSize: {x: 15, y: 0, z: 15}
+  maxEnemies: 1
+  spawnHeightOffset: 0.5
 --- !u!1 &578205114
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,6 +761,7 @@ GameObject:
   - component: {fileID: 627027986}
   - component: {fileID: 627027985}
   - component: {fileID: 627027988}
+  - component: {fileID: 627027989}
   m_Layer: 6
   m_Name: Obstacle (2)
   m_TagString: Untagged
@@ -724,7 +799,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -811,6 +886,27 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 916986ebcec9ce4408d932b8214b3077, type: 2}
   m_BuildHeightMesh: 0
+--- !u!65 &627027989
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627027983}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0000002, y: 0.99999994, z: 1.0000001}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,7 +1356,7 @@ GameObject:
   - component: {fileID: 1399763617}
   - component: {fileID: 1399763616}
   m_Layer: 0
-  m_Name: EnemySpawner
+  m_Name: CubeEnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1310,6 +1406,7 @@ GameObject:
   - component: {fileID: 1638371548}
   - component: {fileID: 1638371547}
   - component: {fileID: 1638371550}
+  - component: {fileID: 1638371551}
   m_Layer: 6
   m_Name: Obstacle (1)
   m_TagString: Untagged
@@ -1347,7 +1444,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1434,6 +1531,27 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 94ac6b787fae9c24da4af344cbf51099, type: 2}
   m_BuildHeightMesh: 0
+--- !u!65 &1638371551
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638371545}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0000005, y: 0.99999994, z: 1.0000001}
+  m_Center: {x: 0.00000047683716, y: 0, z: 0}
 --- !u!114 &1662801879 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 496990239621721544, guid: 53295b4e3cec42c4185d220da7ba1afd, type: 3}
@@ -2042,6 +2160,54 @@ MonoBehaviour:
   gameOverMenu: {fileID: 4253868437671151932}
   retryButton: {fileID: 6357328949500251558}
   gamOverQuitButton: {fileID: 6890759714203037563}
+--- !u!1 &1938579084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1938579085}
+  - component: {fileID: 1938579086}
+  m_Layer: 0
+  m_Name: CylinderEnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1938579085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938579084}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.4, y: 1.46, z: 17.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438648585}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1938579086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938579084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f8d30da3564af48867268707d89126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 870626225086875833, guid: 78470abe2dcd1a144a252579bfd88221, type: 3}
+  spawnAreaSize: {x: 15, y: 0, z: 15}
+  maxEnemies: 1
+  spawnHeightOffset: 0.5
 --- !u!1 &1982024280
 GameObject:
   m_ObjectHideFlags: 3

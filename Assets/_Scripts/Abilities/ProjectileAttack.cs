@@ -6,6 +6,8 @@ public class ProjectileAttack : Ability
     private GameObject projectilePrefab;
     [SerializeField]
     private Transform spawnPos;
+    [SerializeField]
+    private Transform yPositionOfProjectile;        // Ensures Y-axis of projectile remains level
 
     public override void Execute()
     {
@@ -21,7 +23,10 @@ public class ProjectileAttack : Ability
 
     public void SpawnProjectile()
     {
-        GameObject go = Instantiate(projectilePrefab, spawnPos.position, spawnPos.rotation);
+        // Ensure projectile Y-axis remains level (ignoring animation)
+        Vector3 firePos = new Vector3(spawnPos.position.x, yPositionOfProjectile.position.y, spawnPos.position.z);
+
+        GameObject go = Instantiate(projectilePrefab, firePos, spawnPos.rotation);
         ProjectileCollider proj = go.GetComponent<ProjectileCollider>();
         proj.Init(ownerStats, this);
         soundManager.PlaySpecialAbilitySound();

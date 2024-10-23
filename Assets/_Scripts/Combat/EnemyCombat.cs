@@ -26,6 +26,8 @@ public class EnemyCombat : Combat
     #region Ability Handler
     protected override void HandleCombatInputs()
     {
+        if (player == null) return;
+
         float playerDistance = Vector3.Distance(transform.position, player.transform.position);
 
         if (!canAttack) return;

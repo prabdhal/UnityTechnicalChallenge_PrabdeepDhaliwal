@@ -27,6 +27,18 @@ public class ProjectileCollider : AttackCollider
     }
     #endregion
 
+    #region OnTrigger
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(StringData.WallTag))
+        {
+            Death();
+        }
+
+        base.OnTriggerEnter(other);
+    }
+    #endregion
+
     #region Projectile Movement
     private void ProjectileMovement()
     {

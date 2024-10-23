@@ -129,6 +129,8 @@ public class EnemyController : MonoBehaviour
 
         // Perform a raycast to see if there is a clear line of sight to the player
         Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+        Debug.DrawRay(head.position, directionToPlayer * detectionRadius, Color.red, 1f); 
+
         if (Physics.Raycast(head.position, directionToPlayer, out RaycastHit hit, detectionRadius, detectionLayers | obstacleLayers))
         {
             // Player is in sight 
