@@ -19,6 +19,15 @@ public class AnimationEventsHandler : MonoBehaviour
     private UnityEvent OnDisableColliderAbilityTwo;
     [SerializeField, Tooltip("Ability two projectile events ONLY")]
     private UnityEvent OnProjectileFireAbilityTwo;
+
+
+    // Events ONLY for ability THREE
+    [SerializeField, Tooltip("Ability two melee events ONLY")]
+    private UnityEvent OnEnableColliderAbilityThree;
+    [SerializeField, Tooltip("Ability two melee events ONLY")]
+    private UnityEvent OnDisableColliderAbilityThree;
+    [SerializeField, Tooltip("Ability two projectile events ONLY")]
+    private UnityEvent OnProjectileFireAbilityThree;
     #endregion
 
     #region Events
@@ -35,7 +44,6 @@ public class AnimationEventsHandler : MonoBehaviour
         OnProjectileFireAbilityOne?.Invoke();
     }
 
-
     public void AbilityTwo_OnEnableCollider()
     {
         OnEnableColliderAbilityTwo?.Invoke();
@@ -47,6 +55,20 @@ public class AnimationEventsHandler : MonoBehaviour
     public void AbilityTwo_OnProjectileFire()
     {
         OnProjectileFireAbilityTwo?.Invoke();
+    }
+
+
+    public void AbilityThree_OnEnableCollider()
+    {
+        OnEnableColliderAbilityThree?.Invoke();
+    }
+    public void AbilityThree_OnDisableCollider()
+    {
+        OnDisableColliderAbilityThree?.Invoke();
+    }
+    public void AbilityThree_OnProjectileFire()
+    {
+        OnProjectileFireAbilityThree?.Invoke();
     }
     #endregion
 }

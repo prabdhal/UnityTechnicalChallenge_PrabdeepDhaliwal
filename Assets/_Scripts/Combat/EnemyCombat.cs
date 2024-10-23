@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyCombat : Combat
 {
     #region Fields
-    private EnemyController controller;
+    private BaseEnemyController controller;
     private GameObject player;
     #endregion
 
@@ -11,7 +11,7 @@ public class EnemyCombat : Combat
     protected override void Start()
     {
         base.Start();
-        controller = GetComponent<EnemyController>();
+        controller = GetComponent<BaseEnemyController>();
         player = GameObject.FindGameObjectWithTag(StringData.PlayerTag);
     }
 
@@ -31,26 +31,20 @@ public class EnemyCombat : Combat
         float playerDistance = Vector3.Distance(transform.position, player.transform.position);
 
         if (!canAttack) return;
+        if (abilities.Length == 0)
+        {
+            Debug.LogError("Need to assign abilities");
+            return;
+        }
 
         for (int i = 0; i < abilities.Length; i++)
         {
-            if (abilities.Length < 2)
-            {
-                Debug.LogWarning("Need minimum of two abilities");
-                return;
-            }
-            
             if (controller.CanAttack)
             {
                 // use basic attack if within range
-                if (playerDistance < abilities[0].AbilityStats.range)
+                if (playerDistance < abilities[i].AbilityStats.range)
                 {
-                    abilities[0].Execute();
-                }
-                // Use special attack if within range
-                if (playerDistance < abilities[1].AbilityStats.range)
-                {
-                    abilities[1].Execute();
+                    abilities[i].Execute();
                 }
             }
         }

@@ -477,7 +477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 1833878018336149898}
   head: {fileID: 2085095342951161275}
-  detectionRadius: 10
+  detectionRadius: 15
   detectionLayers:
     serializedVersion: 2
     m_Bits: 8
@@ -518,12 +518,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180e58a94d934374fbf97264047df623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 75
   maxMana: 0
-  attackDamage: 5
+  attackDamage: 15
   magicDamage: 10
-  armor: 0
-  magicResistance: 0
+  armor: 5
+  magicResistance: 10
   movementSpeed: 3
   attackSpeed: 1
 --- !u!114 &5130928866763158712
@@ -995,7 +995,7 @@ MonoBehaviour:
     baseAttackDamageScaling: 0
     flatMagicDamage: 0
     baseMagicDamageScaling: 1
-  abilityCooldown: 0
+  abilityCooldown: 1
   manaCost: 0
   projectilePrefab: {fileID: 1246318884732934483, guid: 8afd586c53a33934a94a85951b42593d, type: 3}
   spawnPos:
@@ -1056,7 +1056,7 @@ MonoBehaviour:
     baseAttackDamageScaling: 1
     flatMagicDamage: 0
     baseMagicDamageScaling: 0
-  abilityCooldown: 0
+  abilityCooldown: 2
   manaCost: 0
 --- !u!1 &3809447270041197732
 GameObject:
@@ -1391,7 +1391,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a29940f16ac09ab4f9c4bcbac015c3ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 360
+  controller: {fileID: 1305298639315670003}
+  rotationSpeed: 120
 --- !u!1 &5375690510473294081
 GameObject:
   m_ObjectHideFlags: 0

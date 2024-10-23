@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxEnemies = 5; // Maximum number of enemies to spawn
     [SerializeField] private float spawnHeightOffset = 0.5f; // Height offset to ensure the enemy spawns on the ground
 
-    private List<EnemyController> currentEnemies = new List<EnemyController>();
+    private List<BaseEnemyController> currentEnemies = new List<BaseEnemyController>();
     #endregion
 
     #region Init
@@ -56,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
     #endregion
 
     #region Enemy Tracking
-    private void HandleEnemyDestroyed(EnemyController enemy)
+    private void HandleEnemyDestroyed(BaseEnemyController enemy)
     {
         currentEnemies.Remove(enemy);
     }

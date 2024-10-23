@@ -1,12 +1,9 @@
 using System;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : BaseEnemyController
 {
     #region Fields
-    [SerializeField]
-    private GameObject container;       // Root gameobject of enemy
 
     [Header("Detection Settings")]
     [SerializeField]
@@ -17,8 +14,6 @@ public class EnemyController : MonoBehaviour
     private LayerMask detectionLayers; // Layers the enemy can detect (e.g., Player layer)
     [SerializeField]
     private LayerMask obstacleLayers; // Layers for obstacles (e.g., Walls)
-    [SerializeField]
-    private float stopppingDistance = 2f;
 
     [Header("Patrol Settings")]
     [SerializeField]
@@ -28,30 +23,16 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Range(0.5f, 1f)]
     private float patrolSpeedRatio;         // percentage of movement speed stat
     private float patrolSpeed => stats.MovementSpeed * patrolSpeedRatio;
-    private float chaseSpeed => stats.MovementSpeed;
-
-
-    private NavMeshAgent agent;
     private int currentPatrolIndex = 0;
-    private GameObject player;
+
     private bool isPlayerDetected;
-    public bool CanAttack => isPlayerDetected;
     private bool isChasingPlayer;
-
-    private Animator anim;
-    private CharacterStats stats;
-
-    public Action<EnemyController> OnEnemyKilled;
     #endregion
 
     #region Init & Update
-    private void Start()
+    protected override void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        stats = GetComponent<CharacterStats>();
-        anim = GetComponentInChildren<Animator>();
-
-        player = GameObject.FindGameObjectWithTag(StringData.PlayerTag);
+        base.Start();
 
         InitPatrol();
     }
@@ -127,33 +108,22 @@ public class EnemyController : MonoBehaviour
     {
         if (distanceFromPlayer > detectionRadius) return false;
 
+        return true;
+
+        // Uncomment for raycast detection 
         // Perform a raycast to see if there is a clear line of sight to the player
-        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-        Debug.DrawRay(head.position, directionToPlayer * detectionRadius, Color.red, 1f); 
+        //Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+        //Debug.DrawRay(head.position, directionToPlayer * detectionRadius, Color.red, 1f); 
 
-        if (Physics.Raycast(head.position, directionToPlayer, out RaycastHit hit, detectionRadius, detectionLayers | obstacleLayers))
-        {
-            // Player is in sight 
-            if (hit.collider.CompareTag(StringData.PlayerTag))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-    #endregion
-
-    #region Death
-    private void Death()
-    {
-        OnEnemyKilled?.Invoke(this);
-
-        Destroy(container);
-    }
-    public void Kill()
-    {
-        stats.InflictDamage(10000);
+        //if (Physics.Raycast(head.position, directionToPlayer, out RaycastHit hit, detectionRadius, detectionLayers | obstacleLayers))
+        //{
+        //    // Player is in sight 
+        //    if (hit.collider.CompareTag(StringData.PlayerTag))
+        //    {
+        //        return true;
+        //    }
+        //}
+        //return false;
     }
     #endregion
 }
