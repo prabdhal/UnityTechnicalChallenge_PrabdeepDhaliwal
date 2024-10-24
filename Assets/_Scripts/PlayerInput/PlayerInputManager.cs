@@ -16,6 +16,7 @@ public class PlayerInputManager : MonoBehaviour
     private InputAction basicAttackAction;
     private InputAction specialAbilityAction;
     private InputAction pauseAction;
+    private InputAction targetLockAction;
 
     public event Action OnPauseAction;
 
@@ -27,6 +28,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool BasicAttackPressed => basicAttackAction.triggered && !IsGamePaused;
     public bool SpecialAbilityPressed => specialAbilityAction.triggered && !IsGamePaused;
     public bool IsPaused => pauseAction.triggered;
+    public bool IsTargetLocked => targetLockAction.ReadValue<float>() > 0;
     public bool IsGamePaused => Time.timeScale == 0;
     #endregion
 
@@ -43,6 +45,7 @@ public class PlayerInputManager : MonoBehaviour
         basicAttackAction = playerInputActions.FindAction("BasicAttack"); ;
         specialAbilityAction = playerInputActions.FindAction("SpecialAbility");
         pauseAction = playerInputActions.FindAction("Pause");
+        targetLockAction = playerInputActions.FindAction("TargetLock");
     }
     private void Update()
     {
@@ -62,6 +65,7 @@ public class PlayerInputManager : MonoBehaviour
         basicAttackAction.Enable();
         specialAbilityAction.Enable();
         pauseAction.Enable();
+        targetLockAction.Enable();
     }
     private void OnDisable()
     {
@@ -73,6 +77,7 @@ public class PlayerInputManager : MonoBehaviour
         basicAttackAction.Disable();
         specialAbilityAction.Disable();
         pauseAction.Disable();
+        targetLockAction.Disable();
     }
     #endregion
 }

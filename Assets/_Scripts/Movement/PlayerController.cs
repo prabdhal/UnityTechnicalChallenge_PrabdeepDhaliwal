@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,10 +8,19 @@ public class PlayerController : MonoBehaviour
     [Header("Player Settings")]
     public float jumpHeight = 2f;
     public float gravity = -9.81f;
+    public float turnSpeed;
 
     [Header("Camera Settings")]
     public Transform cameraTransform;
     public float cameraSensitivity = 3f;
+
+    [Header("Target Lock Settings")]
+    public float lockOnTurnSpeed = 5f;
+    private TargetDetection targetDetection;
+    private Transform lockedTarget;
+    public Transform LockedTarget => lockedTarget;
+    private bool isTargetLocked;
+    public bool IsTargetLocked => isTargetLocked;
 
     private CharacterController controller;
     private CharacterStats stats;
@@ -19,9 +29,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private Vector3 playerVelocity;
     private bool isGrounded;
-
     private float turnSmoothVelocity;
-    public float turnSpeed;
 
     private bool isDead = false;
     public bool IsDead => isDead;
@@ -38,6 +46,7 @@ public class PlayerController : MonoBehaviour
         combat = GetComponent<PlayerCombat>();
         anim = GetComponentInChildren<Animator>();
         cameraTransform = Camera.main.transform;
+        targetDetection = GetComponent<TargetDetection>();
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -51,11 +60,38 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        HandleTargetLocking();
         Movement();
         RotatePlayerWithCamera();
         ApplyGravity();
 
         JumpHandler();
+    }
+    #endregion
+
+    #region Target Locking
+    private void HandleTargetLocking()
+    {
+        if (inputManager.IsTargetLocked)
+        {
+            Debug.Log("inputManager.IsTargetLocked: " + inputManager.IsTargetLocked);
+            if (!isTargetLocked)
+            {
+                // Lock onto the nearest target
+                lockedTarget = targetDetection.GetCurrentTarget();
+                Debug.Log("lockedTarget: " + lockedTarget);
+                if (lockedTarget != null)
+                {
+                    isTargetLocked = true;
+                }
+            }
+        }
+        else
+        {
+            isTargetLocked = false;
+            targetDetection.ClearTarget();
+            lockedTarget = null;
+        }
     }
     #endregion
 
@@ -71,18 +107,36 @@ public class PlayerController : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
-            // Calculate the target angle based on camera direction
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+            if (isTargetLocked && lockedTarget != null)
+            {
+                // Strafe relative to the locked target
+                Vector3 targetDirection = (lockedTarget.position - transform.position).normalized;
+                targetDirection.y = 0; // Ensure the target direction is flat on the XZ plane
 
-            // Instantly turn towards the target angle with some smoothing 
-            float angle = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, turnSpeed * Time.deltaTime);
+                // Strafing direction relative to the locked target
+                Vector3 right = Quaternion.Euler(0, 90, 0) * targetDirection; // Right vector relative to the target
+                Vector3 moveDirection = (right * horizontal + targetDirection * vertical).normalized;
 
-            // Apply the calculated angle for rotation
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                // Rotate towards the locked target
+                RotateTowardsTarget(lockedTarget.position);
 
-            // Move the player
-            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDirection.normalized * stats.MovementSpeed * Time.deltaTime);
+                controller.Move(moveDirection * stats.MovementSpeed * Time.deltaTime);
+            }
+            else
+            {
+                // Regular movement without target lock
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+                float angle = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, turnSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+                Vector3 moveDirection = Quaternion.Euler(0f, transform.eulerAngles.y, 0f) * Vector3.forward;
+                controller.Move(moveDirection.normalized * stats.MovementSpeed * Time.deltaTime);
+            }
+        }
+        else if (isTargetLocked && lockedTarget != null)
+        {
+            // Rotate towards the locked target even when the player is idle
+            RotateTowardsTarget(lockedTarget.position);
         }
     }
     #endregion
@@ -90,13 +144,18 @@ public class PlayerController : MonoBehaviour
     #region Rotation
     private void RotatePlayerWithCamera()
     {
-        // Camera rotation
         float mouseX = inputManager.LookInput.x * cameraSensitivity;
         float mouseY = inputManager.LookInput.y * cameraSensitivity;
 
-        // Apply camera rotation to the camera rig (parent object of the camera)
         cameraTransform.Rotate(Vector3.up * mouseX);
         cameraTransform.Rotate(Vector3.right * -mouseY);
+    }
+    private void RotateTowardsTarget(Vector3 targetPosition)
+    {
+        Vector3 targetDirection = (targetPosition - transform.position).normalized;
+        float targetAngle = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
+        float smoothAngle = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, lockOnTurnSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
     }
     #endregion
 

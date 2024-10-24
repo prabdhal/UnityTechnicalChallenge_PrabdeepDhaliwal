@@ -677,6 +677,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnEnableColliderAbilityThree:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDisableColliderAbilityThree:
+    m_PersistentCalls:
+      m_Calls: []
+  OnProjectileFireAbilityThree:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2932966093618495731
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,7 +1189,7 @@ GameObject:
   - component: {fileID: 7267375219410869757}
   - component: {fileID: 6626278412640644308}
   - component: {fileID: 7718009127354532099}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1288,6 +1297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 870626225086875833}
+  stopppingDistance: 2
   head: {fileID: 8810056795242395987}
   detectionRadius: 20
   detectionLayers:
@@ -1296,7 +1306,6 @@ MonoBehaviour:
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 64
-  stopppingDistance: 2
   patrolPoints:
   - {fileID: 1239471708020537443}
   - {fileID: 5201734816587372996}

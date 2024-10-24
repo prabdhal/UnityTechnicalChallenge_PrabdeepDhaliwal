@@ -25,7 +25,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform spawnPos;
     [SerializeField]
-    private CinemachineFreeLook freeLookCamera;
+    private CinemachineFreeLook freeLookCam;
+    [SerializeField]
+    private CinemachineTargetGroup targetGroupCam;
 
     private GameObject spawnedPlayer;
 
@@ -42,10 +44,15 @@ public class GameManager : MonoBehaviour
         GameObject go = Instantiate(playerPrefab, spawnPos.position, Quaternion.identity);
         spawnedPlayer = go;
 
-        if (freeLookCamera != null)
+        if (targetGroupCam != null)
         {
-            freeLookCamera.Follow = spawnedPlayer.transform;
-            freeLookCamera.LookAt = spawnedPlayer.transform;
+            targetGroupCam.AddMember(spawnedPlayer.transform, 1f, 10);
+        }
+
+        if (freeLookCam != null)
+        {
+            freeLookCam.Follow = targetGroupCam.transform;
+            freeLookCam.LookAt = targetGroupCam.transform;
         }
 
         PlayerController controller = go.GetComponent<PlayerController>();
@@ -60,8 +67,8 @@ public class GameManager : MonoBehaviour
 
         OnPlayerDespawn?.Invoke();
 
-        freeLookCamera.Follow = null;
-        freeLookCamera.LookAt = null;
+        freeLookCam.Follow = null;
+        freeLookCam.LookAt = null;
         Destroy(spawnedPlayer);
         spawnedPlayer = null;
     }

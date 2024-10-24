@@ -513,6 +513,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnEnableColliderAbilityThree:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDisableColliderAbilityThree:
+    m_PersistentCalls:
+      m_Calls: []
+  OnProjectileFireAbilityThree:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3163987869743225118
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +627,7 @@ GameObject:
   - component: {fileID: 6912707266112147680}
   - component: {fileID: 1236687793236222788}
   - component: {fileID: 1889129679640560064}
+  - component: {fileID: 1463752453537965198}
   - component: {fileID: 5311153231246676062}
   - component: {fileID: 6697045526177389229}
   m_Layer: 3
@@ -687,9 +697,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeight: 2
   gravity: -9.81
+  turnSpeed: 1000
   cameraTransform: {fileID: 0}
   cameraSensitivity: 3
-  turnSpeed: 1000
+  lockOnTurnSpeed: 1000
 --- !u!114 &2622454086775469854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -799,6 +810,23 @@ MonoBehaviour:
   magicResistance: 1
   movementSpeed: 5
   attackSpeed: 1
+--- !u!114 &1463752453537965198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380954709588729635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39064bb334b295e488262a3fd2f35a44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 20
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  targetGroup: {fileID: 0}
 --- !u!114 &5311153231246676062
 MonoBehaviour:
   m_ObjectHideFlags: 0

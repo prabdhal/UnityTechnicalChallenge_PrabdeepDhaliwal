@@ -933,7 +933,7 @@ GameObject:
   - component: {fileID: 6424727881872264391}
   - component: {fileID: 4381527548500631353}
   - component: {fileID: 8091857560233787439}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1041,6 +1041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 851783967690526951}
+  stopppingDistance: 3
   head: {fileID: 2222429465572844603}
   detectionRadius: 10
   detectionLayers:
@@ -1049,7 +1050,6 @@ MonoBehaviour:
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 64
-  stopppingDistance: 3
   patrolPoints:
   - {fileID: 135803859861536876}
   - {fileID: 5875066126263236670}
