@@ -62,7 +62,8 @@ public class EnemyController : BaseEnemyController
 
         if (isPlayerDetected)
         {
-            if (distanceFromPlayer <= stopppingDistance)
+            agent.updateRotation = false;
+            if (distanceFromPlayer <= stoppingDistance)
             {
                 agent.speed = 0f;
             }
@@ -74,15 +75,17 @@ public class EnemyController : BaseEnemyController
             }
             agent.SetDestination(player.transform.position);
 
+            // Manually rotate to player
+            RotationHandler();
         }
         else if (isChasingPlayer)
         {
-            // If the player was recently detected but is now out of sight, keep chasing for a short duration
             isChasingPlayer = false;
             Patrol();
         }
         else
         {
+            agent.updateRotation = true;
             Patrol();
         }
     }
@@ -108,6 +111,7 @@ public class EnemyController : BaseEnemyController
     {
         if (distanceFromPlayer > detectionRadius) return false;
 
+        canAttack = true;
         return true;
 
         // Uncomment for raycast detection 

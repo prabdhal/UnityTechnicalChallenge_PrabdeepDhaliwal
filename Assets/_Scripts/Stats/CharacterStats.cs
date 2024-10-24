@@ -27,8 +27,8 @@ public class CharacterStats : MonoBehaviour
     public float MagicDamage => magicDamage;
 
     [SerializeField]
-    private float armor;
-    public float Armor => armor;
+    private float armour;
+    public float Armour => armour;
 
     [SerializeField]
     private float magicResistance;
@@ -65,12 +65,14 @@ public class CharacterStats : MonoBehaviour
     {
         currentHealth -= damage;
 
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         OnHealthChange?.Invoke(currentHealth, maxHealth);
     }
     public void HealHealth(float damage)
     {
         currentHealth += damage;
 
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         OnHealthChange?.Invoke(currentHealth, maxHealth);
     }
     #endregion
@@ -88,7 +90,48 @@ public class CharacterStats : MonoBehaviour
     {
         currentMana -= mana;
 
+        currentMana = Mathf.Clamp(currentMana, 0, maxMana);
         OnManaChange?.Invoke(currentMana, maxMana);
+    }
+    public void HealMana(float mana)
+    {
+        currentMana += mana;
+
+        currentMana = Mathf.Clamp(currentMana, 0, maxMana);
+        OnManaChange?.Invoke(currentMana, maxMana);
+    }
+    #endregion
+
+    #region Other Stat Updates
+    public void AddAttackDamage(float amount)
+    {
+        attackDamage += amount;
+        attackDamage = Mathf.Clamp(attackDamage, 0, 100);
+    }
+    public void AddMagicDamage(float amount)
+    {
+        magicDamage += amount;
+        magicDamage = Mathf.Clamp(magicDamage, 0, 100);
+    }
+    public void AddArmor(float amount)
+    {
+        armour += amount;
+        armour = Mathf.Clamp(armour, 0, 100);
+    }
+    public void AddMagicResistance(float amount)
+    {
+        magicResistance += amount;
+        magicResistance = Mathf.Clamp(magicResistance, 0, 100);
+    }
+    public void AddMovementSpeed(float amount)
+    {
+        movementSpeed += amount;
+        movementSpeed = Mathf.Clamp(movementSpeed, 0, 10);
+    }
+    public void AddAttackSpeed(float amount)
+    {
+        attackSpeed += amount;
+        attackSpeed = Mathf.Clamp(attackSpeed, 0, 5);
     }
     #endregion
 

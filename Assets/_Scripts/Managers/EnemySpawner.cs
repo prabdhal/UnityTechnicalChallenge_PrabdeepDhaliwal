@@ -5,18 +5,14 @@ public class EnemySpawner : MonoBehaviour
 {
     #region Fields
     [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private Vector3 spawnAreaSize = new Vector3(5f, 0f, 5f); // Size of the spawning area
-    [SerializeField] private int maxEnemies = 5; // Maximum number of enemies to spawn
+    [SerializeField] private Vector3 spawnAreaSize = new Vector3(5f, 0f, 5f); 
+    [SerializeField] private int maxEnemies = 5; 
     [SerializeField] private float spawnHeightOffset = 0.5f; // Height offset to ensure the enemy spawns on the ground
+    [SerializeField] private LootDrop lootDrop;
 
     private List<BaseEnemyController> currentEnemies = new List<BaseEnemyController>();
     #endregion
 
-    #region Init
-    private void Start()
-    {
-    }
-    #endregion
 
     #region Spawn Logic
     public void SpawnEnemy()
@@ -28,7 +24,12 @@ public class EnemySpawner : MonoBehaviour
         EnemyController controller = enemy.GetComponentInChildren<EnemyController>();
         controller.OnEnemyKilled += HandleEnemyDestroyed;
 
-        enemy.transform.parent = transform; // Set the spawner as the parent
+        if (lootDrop != null)
+        {
+            controller.OnEnemyKilled += lootDrop.DropLoot;
+        }
+
+        enemy.transform.parent = transform; // Set the spawner as the parent of spawned enemy
 
         currentEnemies.Add(controller);
     }
@@ -62,10 +63,11 @@ public class EnemySpawner : MonoBehaviour
     }
     #endregion
 
+    #region Gizmos
     private void OnDrawGizmos()
     {
-        // Draw the spawn area cube in the editor
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(transform.position + Vector3.up * spawnHeightOffset, spawnAreaSize);
     }
+    #endregion
 }

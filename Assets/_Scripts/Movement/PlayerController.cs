@@ -47,9 +47,6 @@ public class PlayerController : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         cameraTransform = Camera.main.transform;
         targetDetection = GetComponent<TargetDetection>();
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
     private void Update()
     {

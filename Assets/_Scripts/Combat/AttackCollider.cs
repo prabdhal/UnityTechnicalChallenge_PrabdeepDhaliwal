@@ -75,7 +75,7 @@ public class AttackCollider : MonoBehaviour
     #region Damage
     protected void ApplyDamage(Vector2 damages, CharacterStats stats)
     {
-        float physicalDamage = Mathf.Clamp(damages.x - stats.Armor, 0, Mathf.Infinity);
+        float physicalDamage = Mathf.Clamp(damages.x - stats.Armour, 0, Mathf.Infinity);
         float magicDamage = Mathf.Clamp(damages.y - stats.MagicResistance, 0, Mathf.Infinity);
 
         float totalDamage = physicalDamage + magicDamage;

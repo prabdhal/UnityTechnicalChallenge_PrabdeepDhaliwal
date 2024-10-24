@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,6 +16,7 @@ public class GameUIManager : MonoBehaviour
     #endregion
 
     #region Fields
+
     [Header("Player HUD")]
     [SerializeField]
     private GameObject playerHud;
@@ -47,6 +46,9 @@ public class GameUIManager : MonoBehaviour
     private Button gamOverQuitButton;
 
     private bool IsPaused => pauseMenu.activeInHierarchy || controlsMenu.activeInHierarchy;
+    private bool uiActive => IsPaused || gameOverMenu.activeInHierarchy;
+
+    private PlayerInputManager inputManager;    // required for deteching pause press
     #endregion
 
     #region Init & Update
@@ -68,10 +70,20 @@ public class GameUIManager : MonoBehaviour
 
         HideAll();
         TogglePlayerHud(true);
+
+        inputManager = FindObjectOfType<PlayerInputManager>();
     }
 
     private void Update()
     {
+        if (inputManager != null)
+        {
+            if (inputManager.IsPaused)
+            {
+                OnPause();
+            }
+        }
+
         if (IsPaused)
         {
             Time.timeScale = 0f;
@@ -79,6 +91,24 @@ public class GameUIManager : MonoBehaviour
         else
         {
             Time.timeScale = 1f;
+        }
+
+        CursorHandler();    // Enable/disable cursor depending on UI panels active or not
+    }
+    #endregion
+
+    #region Cursor Handler
+    private void CursorHandler()
+    {
+        if (uiActive)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
     #endregion

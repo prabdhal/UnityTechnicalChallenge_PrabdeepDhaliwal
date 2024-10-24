@@ -2,6 +2,15 @@ using UnityEngine;
 
 public class EnemyBossController : BaseEnemyController
 {
+
+    #region Init
+    protected override void Start()
+    {
+        base.Start();
+        agent.updateRotation = false;
+        canAttack = true;
+    }
+    #endregion
     #region Update
     private void Update()
     {
@@ -15,7 +24,7 @@ public class EnemyBossController : BaseEnemyController
         float distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
         anim.SetFloat(StringData.MoveSpeedParam, agent.speed);
 
-        if (distanceFromPlayer <= stopppingDistance)
+        if (distanceFromPlayer <= stoppingDistance)
         {
             agent.speed = 0f;
         }
@@ -25,7 +34,8 @@ public class EnemyBossController : BaseEnemyController
         }
         agent.SetDestination(player.transform.position);
 
-        canAttack = true;
+        // Manually rotate to player
+        RotationHandler();
     }
     #endregion
 }

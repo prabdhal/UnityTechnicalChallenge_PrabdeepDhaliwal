@@ -2117,7 +2117,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 720
+  m_AngularSpeed: 180
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -2162,20 +2162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 851783967690526951}
-  head: {fileID: 0}
-  detectionRadius: 10
-  detectionLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  obstacleLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  stopppingDistance: 5
-  patrolPoints: []
-  waypointAccuracy: 1
-  patrolSpeedRatio: 0.5
-  container: {fileID: 851783967690526951}
-  stopppingDistance: 5
+  stoppingDistance: 2
+  attackRotSpeed: 0
 --- !u!114 &1159264998281604360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2208,7 +2196,7 @@ MonoBehaviour:
   maxMana: 0
   attackDamage: 20
   magicDamage: 35
-  armor: 5
+  armour: 0
   magicResistance: 2
   movementSpeed: 2
   attackSpeed: 1
