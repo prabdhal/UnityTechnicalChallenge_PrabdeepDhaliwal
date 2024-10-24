@@ -13,7 +13,7 @@ public class CharacterStats : MonoBehaviour
     public float MaxHealth => maxHealth;
 
     private float currentMana;
-    public float Mana => currentMana;
+    public float CurrentMana => currentMana;
     [SerializeField]
     private float maxMana;
     public float MaxMana => maxMana;

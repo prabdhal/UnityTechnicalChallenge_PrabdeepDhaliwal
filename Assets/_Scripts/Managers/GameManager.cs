@@ -30,8 +30,9 @@ public class GameManager : MonoBehaviour
     private CinemachineTargetGroup targetGroupCam;
 
     private GameObject spawnedPlayer;
+    public GameObject SpawnedPlayer => spawnedPlayer;
 
-    public Action OnPlayerSpawn;
+    public Action<GameObject> OnPlayerSpawn;
     public Action OnPlayerDespawn;
     #endregion
 
@@ -58,7 +59,7 @@ public class GameManager : MonoBehaviour
         PlayerController controller = go.GetComponent<PlayerController>();
         controller.OnPlayerKilled += DespawnPlayer;
 
-        OnPlayerSpawn?.Invoke();
+        OnPlayerSpawn?.Invoke(spawnedPlayer);
     }
 
     public void DespawnPlayer()

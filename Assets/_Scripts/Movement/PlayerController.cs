@@ -71,12 +71,10 @@ public class PlayerController : MonoBehaviour
     {
         if (inputManager.IsTargetLocked)
         {
-            Debug.Log("inputManager.IsTargetLocked: " + inputManager.IsTargetLocked);
             if (!isTargetLocked)
             {
                 // Lock onto the nearest target
                 lockedTarget = targetDetection.GetCurrentTarget();
-                Debug.Log("lockedTarget: " + lockedTarget);
                 if (lockedTarget != null)
                 {
                     isTargetLocked = true;

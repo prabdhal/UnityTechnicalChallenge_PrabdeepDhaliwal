@@ -828,7 +828,7 @@ MonoBehaviour:
     baseAttackDamageScaling: 0
     flatMagicDamage: 0
     baseMagicDamageScaling: 1
-  abilityCooldown: 2
+  abilityCooldown: 10
   manaCost: 0
   projectilePrefab: {fileID: 1246318884732934483, guid: 8afd586c53a33934a94a85951b42593d, type: 3}
   spawnPos: {fileID: 4249970024965851656}
@@ -1057,6 +1057,8 @@ MonoBehaviour:
   - {fileID: 2304259693100403826}
   waypointAccuracy: 1
   patrolSpeedRatio: 0.5
+  stuckDetectionTime: 3
+  stuckDistanceThreshold: 0.5
 --- !u!114 &1159264998281604360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,11 +1088,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   maxMana: 0
-  attackDamage: 15
-  magicDamage: 10
+  attackDamage: 10
+  magicDamage: 5
   armour: 0
   magicResistance: 0
-  movementSpeed: 3.5
+  movementSpeed: 4
   attackSpeed: 1
 --- !u!114 &4381527548500631353
 MonoBehaviour:

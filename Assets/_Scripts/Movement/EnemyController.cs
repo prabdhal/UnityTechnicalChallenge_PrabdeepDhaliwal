@@ -25,6 +25,15 @@ public class EnemyController : BaseEnemyController
     private float patrolSpeed => stats.MovementSpeed * patrolSpeedRatio;
     private int currentPatrolIndex = 0;
 
+    [Header("Stuck Detection Settings")]
+    [SerializeField]
+    private float stuckDetectionTime = 3f; // Time to detect if stuck at patrol point
+    [SerializeField]
+    private float stuckDistanceThreshold = 0.5f; // Minimum distance to consider movement
+
+    private float stuckTimer = 0f;
+    private Vector3 lastPosition;
+
     private bool isPlayerDetected;
     private bool isChasingPlayer;
     #endregion
@@ -43,6 +52,7 @@ public class EnemyController : BaseEnemyController
             agent.destination = patrolPoints[currentPatrolIndex].position;
             agent.speed = patrolSpeed;
         }
+        lastPosition = transform.position;
     }
 
     private void Update()
@@ -87,6 +97,8 @@ public class EnemyController : BaseEnemyController
         {
             agent.updateRotation = true;
             Patrol();
+
+            CheckIfStuck();
         }
     }
     #endregion
@@ -128,6 +140,42 @@ public class EnemyController : BaseEnemyController
         //    }
         //}
         //return false;
+    }
+    private void CheckIfStuck()
+    {
+        float distanceMoved = Vector3.Distance(transform.position, lastPosition);
+
+        // Check if the enemy has moved less than the stuck distance threshold
+        if (distanceMoved < stuckDistanceThreshold)
+        {
+            stuckTimer += Time.deltaTime;
+
+            // If stuck for longer than the detection time, update the patrol point
+            if (stuckTimer >= stuckDetectionTime)
+            {
+                UpdatePatrolPoint();
+                ResetStuckDetection();
+            }
+        }
+        else
+        {
+            ResetStuckDetection();
+        }
+
+        // Update the last known position
+        lastPosition = transform.position;
+    }
+    private void UpdatePatrolPoint()
+    {
+        // Move to the next patrol point in the array
+        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+        agent.SetDestination(patrolPoints[currentPatrolIndex].position);
+    }
+
+    private void ResetStuckDetection()
+    {
+        stuckTimer = 0f;
+        lastPosition = transform.position;
     }
     #endregion
 }

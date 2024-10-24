@@ -13,10 +13,7 @@ public class EnemySpawnManager : MonoBehaviour
     private void Start()
     {
         spawnTimer = spawnInterval;
-    }
-    private void InitSpawner()
-    {
-        spawnTimer = spawnInterval;
+        SpawnEnemies();
     }
 
     private void Update()

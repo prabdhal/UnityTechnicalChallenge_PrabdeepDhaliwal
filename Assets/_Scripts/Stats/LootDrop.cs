@@ -54,7 +54,8 @@ public class LootDrop : MonoBehaviour
         if (selectedItem != null && selectedItem.itemPrefab != null)
         {
             // Instantiate the selected item's prefab at the drop position
-            Instantiate(selectedItem.itemPrefab, enemy.transform.position, Quaternion.identity);
+            GameObject go = Instantiate(selectedItem.itemPrefab, enemy.transform.position, Quaternion.identity);
+            go.GetComponent<StatLootItem>().Init(GameUIManager.Instance.itemMessagesHud);
         }
     }
     #endregion
