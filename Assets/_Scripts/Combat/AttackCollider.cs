@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AttackCollider : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class AttackCollider : MonoBehaviour
     private Coroutine damageCoroutine;
 
     public Action OnHitTarget;
+    public UnityEvent<Vector3> OnHit;        // Add hit sounds here via inspector
     #endregion
 
     #region Init
@@ -47,6 +49,7 @@ public class AttackCollider : MonoBehaviour
             ApplyDamage(abilityDmg, stats);
 
             OnHitTarget?.Invoke();
+            OnHit?.Invoke(transform.position);  // play hit sound
 
             // Start damage over time if applicable
             if (damageOnStay)
@@ -77,7 +80,6 @@ public class AttackCollider : MonoBehaviour
     {
         float physicalDamage = Mathf.Clamp(damages.x - stats.Armour, 0, Mathf.Infinity);
         float magicDamage = Mathf.Clamp(damages.y - stats.MagicResistance, 0, Mathf.Infinity);
-
         float totalDamage = physicalDamage + magicDamage;
         
         stats.InflictDamage((int)totalDamage);

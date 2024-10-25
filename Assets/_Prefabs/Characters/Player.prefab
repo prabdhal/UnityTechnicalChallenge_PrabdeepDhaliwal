@@ -239,7 +239,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6720988662623095802}
-  - component: {fileID: 2936959995958283311}
+  - component: {fileID: 4124379864203365584}
   m_Layer: 3
   m_Name: SpecialAttack
   m_TagString: Untagged
@@ -262,7 +262,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8608926831875899471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2936959995958283311
+--- !u!114 &4124379864203365584
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -271,22 +271,54 @@ MonoBehaviour:
   m_GameObject: {fileID: 820354786013085678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fb884857866663489dfad4cfcfb0c4a, type: 3}
+  m_Script: {fileID: 11500000, guid: 409db558e6a17e74393403e2ce71bda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 0}
   animationName: SpecialAttack
   abilityStats:
-    range: 20
+    range: 15
     flatAttackDamage: 0
     baseAttackDamageScaling: 0
     flatMagicDamage: 0
     baseMagicDamageScaling: 1
   abilityCooldown: 5
   manaCost: 10
-  projectilePrefab: {fileID: 1246318884732934483, guid: e72e8bbb1253e084b838d3a2b6b013d3, type: 3}
+  OnAbilityFire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5311153231246676062}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlaySpecialAbilityFireSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAbilityHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5311153231246676062}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayBasicAttackHitSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  projectilePrefab: {fileID: 1246318884732934483, guid: c29c36ecf47688d4c9aee32c0f1333fe, type: 3}
   spawnPos: {fileID: 6856467169176144150}
   yPositionOfProjectile: {fileID: 4315802525920658924}
+  numberOfProjectiles: 5
+  spreadArc: 45
 --- !u!1 &1570073511976346374
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +375,7 @@ Transform:
   m_GameObject: {fileID: 2170848502606488755}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1, z: 1.1}
+  m_LocalPosition: {x: 0.5, y: 1, z: 1.135}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -501,8 +533,8 @@ MonoBehaviour:
   OnProjectileFireAbilityTwo:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2936959995958283311}
-        m_TargetAssemblyTypeName: ProjectileAttack, Assembly-CSharp
+      - m_Target: {fileID: 4124379864203365584}
+        m_TargetAssemblyTypeName: SpreadProjectileAttack, Assembly-CSharp
         m_MethodName: SpawnProjectile
         m_Mode: 1
         m_Arguments:
@@ -569,14 +601,44 @@ MonoBehaviour:
   attackCollider: {fileID: 0}
   animationName: BasicAttack
   abilityStats:
-    range: 10
+    range: 20
     flatAttackDamage: 0
     baseAttackDamageScaling: 1
     flatMagicDamage: 0
     baseMagicDamageScaling: 0
   abilityCooldown: 0.5
   manaCost: 0
-  projectilePrefab: {fileID: 1246318884732934483, guid: e72e8bbb1253e084b838d3a2b6b013d3, type: 3}
+  OnAbilityFire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5311153231246676062}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayBasicAbilityFireSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAbilityHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5311153231246676062}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayBasicAttackHitSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  projectilePrefab: {fileID: 1246318884732934483, guid: d9e8b2fb76a87db41890b0f67974089c, type: 3}
   spawnPos: {fileID: 6453197325391344364}
   yPositionOfProjectile: {fileID: 4315802525920658924}
 --- !u!1 &3570981801449721919
@@ -793,7 +855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilities:
   - {fileID: 5730560302163597228}
-  - {fileID: 2936959995958283311}
+  - {fileID: 4124379864203365584}
 --- !u!114 &1889129679640560064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,7 +873,7 @@ MonoBehaviour:
   attackDamage: 8
   magicDamage: 15
   armour: 0
-  magicResistance: 1
+  magicResistance: 0
   movementSpeed: 5
   attackSpeed: 1
 --- !u!114 &1463752453537965198
@@ -843,8 +905,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 315e425b9a0f6d04386f25b6c4eadf09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basicAttackAudio: {fileID: 8300000, guid: b228be2bf7122e74fa0b0af9b5aa3993, type: 3}
-  specialAbilityAudio: {fileID: 8300000, guid: 1aaa9c29687f19e4d9cc375e140ca9e2, type: 3}
+  basicAttackAudio: {fileID: 8300000, guid: 2efa3a75612fe6e45a745e51d3073c43, type: 3}
+  basicAttackHitAudio: {fileID: 8300000, guid: 6689d1338a8fb464d855bfd6a5926702, type: 3}
+  specialAbilityAudio: {fileID: 8300000, guid: bbca78feb8a5e4448a2721163e9426e7, type: 3}
+  specialAbilityHitAudio: {fileID: 8300000, guid: 6689d1338a8fb464d855bfd6a5926702, type: 3}
+  bossEarthquakeAudio: {fileID: 0}
 --- !u!82 &6697045526177389229
 AudioSource:
   m_ObjectHideFlags: 0

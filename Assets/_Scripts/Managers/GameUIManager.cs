@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -53,14 +54,22 @@ public class GameUIManager : MonoBehaviour
     [SerializeField]
     private Button retryButton;
     [SerializeField]
-    private Button gamOverQuitButton;
+    private Button gameOverQuitButton;
+
+    [Header("Victory UI")]
+    [SerializeField]
+    private GameObject victoryMenu;
+    [SerializeField]
+    private Button victoryRetryButton;
+    [SerializeField]
+    private Button victoryQuitButton;
 
     [Header("Game Over UI")]
     public ItemMessageHud itemMessagesHud;
 
     private bool IsPaused => pauseMenu.activeInHierarchy || controlsMenu.activeInHierarchy || statsMenu.activeInHierarchy;
     private bool uiActive => IsPaused || gameOverMenu.activeInHierarchy;
-    private bool IsGameOver => gameOverMenu.activeInHierarchy;
+    private bool IsGameOver => gameOverMenu.activeInHierarchy || victoryMenu.activeInHierarchy;
 
     private PlayerInputManager inputManager;    // required for deteching pause press
     #endregion
@@ -82,7 +91,11 @@ public class GameUIManager : MonoBehaviour
 
         // Game over menu
         retryButton.onClick.AddListener(OnRestart);
-        gamOverQuitButton.onClick.AddListener(OnQuit);
+        gameOverQuitButton.onClick.AddListener(OnQuit);
+        
+        // Victory menu
+        victoryRetryButton.onClick.AddListener(OnRestart);
+        victoryQuitButton.onClick.AddListener(OnQuit);
 
         GameManager.Instance.OnPlayerDespawn += OnGameOver;
         statsMenuScript.Setup(GameManager.Instance.SpawnedPlayer);
@@ -103,9 +116,13 @@ public class GameUIManager : MonoBehaviour
             }
         }
 
-        if (IsPaused)
+        if (IsPaused)           // freeze time
         {
             Time.timeScale = 0f;
+        }
+        else if (IsGameOver)    // slow time by half during game over or victory screen
+        {
+            Time.timeScale = 0.5f;
         }
         else
         {
@@ -140,18 +157,42 @@ public class GameUIManager : MonoBehaviour
     public void TogglePauseMenu(bool display)
     {
         pauseMenu.SetActive(display);
+
+        if (display)
+            HighlightElement(resumeButton.gameObject);
     }
     public void ToggleControlsMenu(bool display)
     {
         controlsMenu.SetActive(display);
+
+        if (display)
+            HighlightElement(backButton.gameObject);
     }
     public void ToggleStatsMenu(bool display)
     {
         statsMenu.SetActive(display);
+
+        if (display)
+            HighlightElement(statsMenuBackButton.gameObject);
     }
     public void ToggleGameOverMenu(bool display)
     {
         gameOverMenu.SetActive(display);
+
+        if (display)
+            HighlightElement(retryButton.gameObject);
+    }
+    public void ToggleVictoryMenu(bool display)
+    {
+        victoryMenu.SetActive(display);
+
+        if (display)
+            HighlightElement(victoryRetryButton.gameObject);
+    }
+    private void HighlightElement(GameObject go)
+    {
+        EventSystem.current.firstSelectedGameObject = go;
+        EventSystem.current.SetSelectedGameObject(go);
     }
     #endregion
 
@@ -172,13 +213,11 @@ public class GameUIManager : MonoBehaviour
     private void OnControls()
     {
         HideAllMenus();
-
         ToggleControlsMenu(true);
     }
     private void OnStats()
     {
         HideAllMenus();
-
         ToggleStatsMenu(true);
     }
     private void OnReturnToPauseMenu()
@@ -190,18 +229,24 @@ public class GameUIManager : MonoBehaviour
     // Load main menu scene
     private void ReturnToMainMenu()
     {
-        SceneManager.LoadScene(StringData.MainMenuScene);   // Load home scene
+        SceneManager.LoadScene(StringData.MainMenuScene);
     }
+    // Reload game scene
     private void OnRestart()
     {
-        SceneManager.LoadScene(StringData.GameScene);   // Reload game scene
+        SceneManager.LoadScene(StringData.GameScene);
     }
-    // Fire on player death / despawn
+    // Fire on player death 
     private void OnGameOver()
     {
         HideAllMenus();
-        
         ToggleGameOverMenu(true);
+    }
+    // Fire on boss death 
+    public void OnVictory()
+    {
+        HideAllMenus();
+        ToggleVictoryMenu(true);
     }
     private void OnQuit()
     {
@@ -212,6 +257,7 @@ public class GameUIManager : MonoBehaviour
     {
         TogglePauseMenu(false);
         ToggleGameOverMenu(false);
+        ToggleVictoryMenu(false);
         ToggleControlsMenu(false);
         ToggleStatsMenu(false);
     }

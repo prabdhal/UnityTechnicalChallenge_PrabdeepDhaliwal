@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [Serializable]
 public struct AbilityStats
@@ -34,19 +35,19 @@ public abstract class Ability : MonoBehaviour
     [SerializeField]
     protected int manaCost;
 
+    public UnityEvent OnAbilityFire;
+
     protected bool isActive;
     public bool IsActive => isActive;
     public bool IsOnCooldown => cooldownTimer > 0;
 
     protected CharacterStats ownerStats;
     protected Animator anim;
-    protected SoundManager soundManager;
     #endregion
 
     #region Init & Tick
-    public void Init(Animator anim, CharacterStats stats, SoundManager sound)
+    public void Init(Animator anim, CharacterStats stats)
     {
-        this.soundManager = sound;
         this.anim = anim;
         ownerStats = stats;
         if (attackCollider != null)
@@ -62,6 +63,13 @@ public abstract class Ability : MonoBehaviour
 
     #region Execute
     public abstract void Execute();
+    #endregion
+
+    #region Sound
+    public void PlayFireSound()
+    {
+        OnAbilityFire?.Invoke();
+    }
     #endregion
 
     #region Calculate Damage

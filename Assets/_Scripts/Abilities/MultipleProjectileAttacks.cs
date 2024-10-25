@@ -31,7 +31,7 @@ public class MultipleProjectileAttacks : Ability
             GameObject go = Instantiate(projectilePrefab, firePos, transform.rotation);
             ProjectileCollider proj = go.GetComponent<ProjectileCollider>();
             proj.Init(ownerStats, this);
-            soundManager.PlaySpecialAbilitySound();
+            PlayFireSound();
         }
     }
 }

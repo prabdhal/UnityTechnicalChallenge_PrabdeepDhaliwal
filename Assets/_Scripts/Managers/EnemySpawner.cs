@@ -9,6 +9,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxEnemies = 5; 
     [SerializeField] private float spawnHeightOffset = 0.5f;
     [SerializeField] private float spawnInterval = 5f; // Timer for spawning
+    [SerializeField]
+    private LootDrop lootDrop;
 
     private List<BaseEnemyController> currentEnemies = new List<BaseEnemyController>();
     private float spawnTimer;
@@ -17,6 +19,7 @@ public class EnemySpawner : MonoBehaviour
     #region Init & Update
     private void Start()
     {
+        SpawnEnemy();
         spawnTimer = spawnInterval;
     }
 
@@ -43,7 +46,11 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = GetRandomPositionWithinArea();
         GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         EnemyController controller = enemy.GetComponentInChildren<EnemyController>();
-        controller.OnEnemyKilled += HandleEnemyDestroyed;
+        controller.OnEnemyKilled_EnemyController += HandleEnemyDestroyed;
+        if (lootDrop != null)
+        {
+            controller.OnEnemyKilled_EnemyController += lootDrop.DropLoot;
+        }
 
         enemy.transform.parent = transform;
 

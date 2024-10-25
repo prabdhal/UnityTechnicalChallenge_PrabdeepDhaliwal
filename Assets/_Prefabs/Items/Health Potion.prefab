@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statType: 0
-  statBuffAmount: 5
+  statBuffAmount: 20
 --- !u!135 &681267313099903223
 SphereCollider:
   m_ObjectHideFlags: 0

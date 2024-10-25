@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BossDetectionZone : MonoBehaviour
 {
-    public Action<GameObject> OnBossZoneEnter;
+    public Action<GameObject> OnBossZoneEnter;  // Trigger when entering boss zone
 
     private void OnTriggerEnter(Collider other)
     {

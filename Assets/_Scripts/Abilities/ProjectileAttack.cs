@@ -3,11 +3,12 @@ using UnityEngine;
 public class ProjectileAttack : Ability
 {
     [SerializeField]
-    private GameObject projectilePrefab;
+    protected GameObject projectilePrefab;
     [SerializeField]
-    private Transform spawnPos;
+    protected Transform spawnPos;
     [SerializeField]
-    private Transform yPositionOfProjectile;        // Ensures Y-axis of projectile remains level
+    protected Transform yPositionOfProjectile;        // Ensures Y-axis of projectile remains level
+
 
     public override void Execute()
     {
@@ -21,7 +22,7 @@ public class ProjectileAttack : Ability
         }
     }
 
-    public void SpawnProjectile()
+    public virtual void SpawnProjectile()
     {
         // Ensure projectile Y-axis remains level (ignoring animation)
         Vector3 firePos = new Vector3(spawnPos.position.x, yPositionOfProjectile.position.y, spawnPos.position.z);
@@ -29,6 +30,6 @@ public class ProjectileAttack : Ability
         GameObject go = Instantiate(projectilePrefab, firePos, spawnPos.rotation);
         ProjectileCollider proj = go.GetComponent<ProjectileCollider>();
         proj.Init(ownerStats, this);
-        soundManager.PlaySpecialAbilitySound();
+        PlayFireSound();
     }
 }

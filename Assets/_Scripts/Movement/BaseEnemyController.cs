@@ -23,7 +23,8 @@ public class BaseEnemyController : MonoBehaviour
     public bool CanAttack => canAttack;
     public bool IsAttacking => anim.GetBool(StringData.IsAttackingAnimatorParam);
 
-    public Action<BaseEnemyController> OnEnemyKilled;
+    public Action OnEnemyKilled;
+    public Action<BaseEnemyController> OnEnemyKilled_EnemyController;
     #endregion
 
     #region Init & Update
@@ -90,7 +91,8 @@ public class BaseEnemyController : MonoBehaviour
     #region Death
     protected virtual void Death()
     {
-        OnEnemyKilled?.Invoke(this);
+        OnEnemyKilled?.Invoke();
+        OnEnemyKilled_EnemyController?.Invoke(this);
         Destroy(container);
     }
     public void Kill()

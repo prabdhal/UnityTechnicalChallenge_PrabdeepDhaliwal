@@ -9,7 +9,6 @@ public abstract class Combat : MonoBehaviour
 
     protected Animator anim;
     protected CharacterStats stats;
-    protected SoundManager soundManager;
 
     protected bool canAttack;
     #endregion
@@ -19,11 +18,10 @@ public abstract class Combat : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         stats = GetComponent<CharacterStats>();
-        soundManager = GetComponent<SoundManager>();
 
         foreach (Ability att in abilities)
         {
-            att.Init(anim, stats, soundManager);
+            att.Init(anim, stats);
         }
     }
 

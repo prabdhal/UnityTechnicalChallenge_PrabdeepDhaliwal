@@ -7,13 +7,13 @@ public class EnemyController : BaseEnemyController
 
     [Header("Detection Settings")]
     [SerializeField]
-    private Transform head;
-    [SerializeField]
     private float detectionRadius = 10f;
-    [SerializeField]
-    private LayerMask detectionLayers; // Layers the enemy can detect (e.g., Player layer)
-    [SerializeField]
-    private LayerMask obstacleLayers; // Layers for obstacles (e.g., Walls)
+    //[SerializeField]
+    //private Transform head;
+    //[SerializeField]
+    //private LayerMask detectionLayers; 
+    //[SerializeField]
+    //private LayerMask obstacleLayers; 
 
     [Header("Patrol Settings")]
     [SerializeField]
@@ -21,15 +21,15 @@ public class EnemyController : BaseEnemyController
     [SerializeField]
     private float waypointAccuracy = 1f;
     [SerializeField, Range(0.5f, 1f)]
-    private float patrolSpeedRatio;         // percentage of movement speed stat
+    private float patrolSpeedRatio;                 // percentage of movement speed stat
     private float patrolSpeed => stats.MovementSpeed * patrolSpeedRatio;
     private int currentPatrolIndex = 0;
 
     [Header("Stuck Detection Settings")]
     [SerializeField]
-    private float stuckDetectionTime = 3f; // Time to detect if stuck at patrol point
+    private float stuckDetectionTime = 3f;          // Time to detect if stuck at patrol point
     [SerializeField]
-    private float stuckDistanceThreshold = 0.5f; // Minimum distance to consider movement
+    private float stuckDistanceThreshold = 0.5f;    // Minimum distance to consider movement
 
     private float stuckTimer = 0f;
     private Vector3 lastPosition;
@@ -119,28 +119,6 @@ public class EnemyController : BaseEnemyController
         agent.SetDestination(patrolPoints[currentPatrolIndex].position);
     }
 
-    private bool IsPlayerDetected(float distanceFromPlayer)
-    {
-        if (distanceFromPlayer > detectionRadius) return false;
-
-        canAttack = true;
-        return true;
-
-        // Uncomment for raycast detection 
-        // Perform a raycast to see if there is a clear line of sight to the player
-        //Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-        //Debug.DrawRay(head.position, directionToPlayer * detectionRadius, Color.red, 1f); 
-
-        //if (Physics.Raycast(head.position, directionToPlayer, out RaycastHit hit, detectionRadius, detectionLayers | obstacleLayers))
-        //{
-        //    // Player is in sight 
-        //    if (hit.collider.CompareTag(StringData.PlayerTag))
-        //    {
-        //        return true;
-        //    }
-        //}
-        //return false;
-    }
     private void CheckIfStuck()
     {
         float distanceMoved = Vector3.Distance(transform.position, lastPosition);
@@ -171,11 +149,33 @@ public class EnemyController : BaseEnemyController
         currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
         agent.SetDestination(patrolPoints[currentPatrolIndex].position);
     }
-
     private void ResetStuckDetection()
     {
         stuckTimer = 0f;
         lastPosition = transform.position;
+    }
+
+    private bool IsPlayerDetected(float distanceFromPlayer)
+    {
+        if (distanceFromPlayer > detectionRadius) return false;
+
+        canAttack = true;
+        return true;
+
+        // Uncomment for raycast detection 
+        // Perform a raycast to see if there is a clear line of sight to the player
+        //Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+        //Debug.DrawRay(head.position, directionToPlayer * detectionRadius, Color.red, 1f); 
+
+        //if (Physics.Raycast(head.position, directionToPlayer, out RaycastHit hit, detectionRadius, detectionLayers | obstacleLayers))
+        //{
+        //    // Player is in sight 
+        //    if (hit.collider.CompareTag(StringData.PlayerTag))
+        //    {
+        //        return true;
+        //    }
+        //}
+        //return false;
     }
     #endregion
 }

@@ -16,6 +16,7 @@ public class EnemyBossController : BaseEnemyController
         anim = GetComponentInChildren<Animator>();
         agent.updateRotation = false;
         detectionZone.OnBossZoneEnter += Setup;
+        OnEnemyKilled += GameUIManager.Instance.OnVictory;
         canAttack = true;
     }
     private void Setup(GameObject player)
@@ -23,6 +24,7 @@ public class EnemyBossController : BaseEnemyController
         this.player = player;
     }
     #endregion
+
     #region Update
     private void Update()
     {
@@ -46,8 +48,7 @@ public class EnemyBossController : BaseEnemyController
         }
         agent.SetDestination(player.transform.position);
 
-        // Manually rotate to player
-        RotationHandler();
+        RotationHandler();  // Manually rotate to player
     }
     #endregion
 }

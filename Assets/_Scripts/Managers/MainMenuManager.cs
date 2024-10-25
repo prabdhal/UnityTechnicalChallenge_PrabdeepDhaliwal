@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -62,15 +63,14 @@ public class MainMenuManager : MonoBehaviour
         HideAll();
         ToggleControlsMenu(true);
     }
-    private void OnQuit()
-    {
-        Application.Quit();
-    }
     private void OnReturnToMainMenu()
     {
         HideAll();
-
         ToggleMainMenu(true);
+    }
+    private void OnQuit()
+    {
+        Application.Quit();
     }
     #endregion
 
@@ -78,10 +78,21 @@ public class MainMenuManager : MonoBehaviour
     public void ToggleMainMenu(bool display)
     {
         mainMenu.SetActive(display);
+
+        if (display)
+            HighlightElement(playButton.gameObject);
     }
     public void ToggleControlsMenu(bool display)
     {
         controlsMenu.SetActive(display);
+
+        if (display)
+            HighlightElement(backButton.gameObject);
+    }
+    private void HighlightElement(GameObject go)
+    {
+        EventSystem.current.firstSelectedGameObject = go;
+        EventSystem.current.SetSelectedGameObject(go);
     }
     public void HideAll()
     {

@@ -487,14 +487,7 @@ MonoBehaviour:
   container: {fileID: 1833878018336149898}
   stoppingDistance: 2
   attackRotSpeed: 0
-  head: {fileID: 2085095342951161275}
   detectionRadius: 15
-  detectionLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  obstacleLayers:
-    serializedVersion: 2
-    m_Bits: 64
   patrolPoints:
   - {fileID: 3680326974233146947}
   - {fileID: 3931020670026933380}
@@ -532,7 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   maxMana: 0
-  attackDamage: 3
+  attackDamage: 5
   magicDamage: 5
   armour: 0
   magicResistance: 10
@@ -551,7 +544,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicAttackAudio: {fileID: 8300000, guid: b228be2bf7122e74fa0b0af9b5aa3993, type: 3}
+  basicAttackHitAudio: {fileID: 8300000, guid: a4b69348ab2120144bd21998481e5368, type: 3}
   specialAbilityAudio: {fileID: 8300000, guid: 1aaa9c29687f19e4d9cc375e140ca9e2, type: 3}
+  specialAbilityHitAudio: {fileID: 8300000, guid: b455f10f4eb6c414db6ef840e3ae0241, type: 3}
+  bossEarthquakeAudio: {fileID: 0}
 --- !u!82 &2287958251687596637
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1002,14 +998,44 @@ MonoBehaviour:
   attackCollider: {fileID: 0}
   animationName: SpecialAttack
   abilityStats:
-    range: 20
+    range: 15
     flatAttackDamage: 0
     baseAttackDamageScaling: 0
     flatMagicDamage: 0
     baseMagicDamageScaling: 1
-  abilityCooldown: 1
+  abilityCooldown: 2
   manaCost: 0
-  projectilePrefab: {fileID: 1246318884732934483, guid: 8afd586c53a33934a94a85951b42593d, type: 3}
+  OnAbilityFire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5130928866763158712}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlaySpecialAbilityFireSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAbilityHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5130928866763158712}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlaySpecialAbilityHitSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  projectilePrefab: {fileID: 1246318884732934483, guid: 7fd9f9ef6f864b4429759c425f88007e, type: 3}
   spawnPos:
   - {fileID: 472309766332410585}
   - {fileID: 3131323947161519228}
@@ -1068,8 +1094,14 @@ MonoBehaviour:
     baseAttackDamageScaling: 1
     flatMagicDamage: 0
     baseMagicDamageScaling: 0
-  abilityCooldown: 2
+  abilityCooldown: 0
   manaCost: 0
+  OnAbilityFire:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAbilityHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3809447270041197732
 GameObject:
   m_ObjectHideFlags: 0

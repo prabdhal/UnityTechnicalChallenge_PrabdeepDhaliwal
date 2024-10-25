@@ -19,7 +19,6 @@ public class MeleeAttack : Ability
     {
         if (attackCollider == null) return;
         attackCollider.gameObject.SetActive(true);
-        soundManager.PlayBasicAbilitySound();
     }
     public void DisableAttackCollider()
     {

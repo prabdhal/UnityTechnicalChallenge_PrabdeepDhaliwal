@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2976834778497884099}
   - component: {fileID: 6738429073913086671}
   - component: {fileID: 2982093364638654453}
+  - component: {fileID: -4609047311866336515}
   m_Layer: 0
   m_Name: EnemyProjectile
   m_TagString: Untagged
@@ -119,6 +120,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTag: Player
-  range: 15
+  damageOnStay: 0
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -4609047311866336515}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlaySpecialAbilityHitSound
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   speed: 10
   deathTimer: 5
+  deathOnHit: 1
+--- !u!114 &-4609047311866336515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246318884732934483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 315e425b9a0f6d04386f25b6c4eadf09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicAttackAudio: {fileID: 0}
+  basicAttackHitAudio: {fileID: 0}
+  specialAbilityAudio: {fileID: 0}
+  specialAbilityHitAudio: {fileID: 8300000, guid: b455f10f4eb6c414db6ef840e3ae0241, type: 3}
+  bossEarthquakeAudio: {fileID: 0}

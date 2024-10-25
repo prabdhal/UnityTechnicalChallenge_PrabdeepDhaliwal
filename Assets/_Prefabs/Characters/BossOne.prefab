@@ -121,17 +121,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 0}
-  animationName: BossAttack
+  animationName: EarthquakeSmashAttack
   abilityStats:
-    range: 10
+    range: 9
     flatAttackDamage: 0
-    baseAttackDamageScaling: 0
+    baseAttackDamageScaling: 0.5
     flatMagicDamage: 0
-    baseMagicDamageScaling: 1
-  abilityCooldown: 10
+    baseMagicDamageScaling: 0.75
+  abilityCooldown: 6
   manaCost: 0
-  projectilePrefab: {fileID: 1246318884732934483, guid: 8afd586c53a33934a94a85951b42593d, type: 3}
-  spawnPos: {fileID: 4249970024965851656}
+  OnAbilityFire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381527548500631353}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayBossEarthquakeFireSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAbilityHit:
+    m_PersistentCalls:
+      m_Calls: []
+  projectilePrefab: {fileID: 1246318884732934483, guid: 5c1cd5f304a63a545900a846c56b1f43, type: 3}
+  spawnPos: {fileID: 1025586773422173310}
   yPositionOfProjectile: {fileID: 5382575297643104189}
 --- !u!1 &445328087244579543
 GameObject:
@@ -248,6 +266,8 @@ Transform:
   - {fileID: 1062740041216828787}
   - {fileID: 6540041784152620405}
   - {fileID: 6788988742739192475}
+  - {fileID: 1025586773422173310}
+  - {fileID: 1113631109818031538}
   m_Father: {fileID: 5919313411676396139}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7209331688610048313
@@ -396,13 +416,13 @@ MonoBehaviour:
   OnProjectileFireAbilityThree:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 6225244102275271213}
+        m_TargetAssemblyTypeName: ProjectileAttack, Assembly-CSharp
+        m_MethodName: SpawnProjectile
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1211,14 +1231,44 @@ MonoBehaviour:
   attackCollider: {fileID: 0}
   animationName: SpecialAttack
   abilityStats:
-    range: 30
+    range: 40
     flatAttackDamage: 0
     baseAttackDamageScaling: 0
     flatMagicDamage: 0
     baseMagicDamageScaling: 1
-  abilityCooldown: 5
+  abilityCooldown: 4
   manaCost: 0
-  projectilePrefab: {fileID: 1246318884732934483, guid: 8afd586c53a33934a94a85951b42593d, type: 3}
+  OnAbilityFire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381527548500631353}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlaySpecialAbilityFireSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAbilityHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381527548500631353}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlaySpecialAbilityHitSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  projectilePrefab: {fileID: 1246318884732934483, guid: 7fd9f9ef6f864b4429759c425f88007e, type: 3}
   spawnPos: {fileID: 4249970024965851656}
   yPositionOfProjectile: {fileID: 5382575297643104189}
 --- !u!1 &1888260948054858596
@@ -2054,7 +2104,7 @@ GameObject:
   - component: {fileID: 6424727881872264391}
   - component: {fileID: 4381527548500631353}
   - component: {fileID: 8091857560233787439}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -2117,7 +2167,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 180
+  m_AngularSpeed: 360
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -2163,7 +2213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 851783967690526951}
   stoppingDistance: 2
-  attackRotSpeed: 0
+  attackRotSpeed: 5
   detectionZone: {fileID: 0}
 --- !u!114 &1159264998281604360
 MonoBehaviour:
@@ -2196,8 +2246,8 @@ MonoBehaviour:
   maxHealth: 250
   maxMana: 0
   attackDamage: 20
-  magicDamage: 35
-  armour: 0
+  magicDamage: 30
+  armour: 5
   magicResistance: 2
   movementSpeed: 2
   attackSpeed: 1
@@ -2214,7 +2264,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicAttackAudio: {fileID: 8300000, guid: b228be2bf7122e74fa0b0af9b5aa3993, type: 3}
+  basicAttackHitAudio: {fileID: 0}
   specialAbilityAudio: {fileID: 8300000, guid: 1aaa9c29687f19e4d9cc375e140ca9e2, type: 3}
+  specialAbilityHitAudio: {fileID: 0}
+  bossEarthquakeAudio: {fileID: 8300000, guid: 2cf0a9b7ea4780642b8712029a176e72, type: 3}
 --- !u!82 &8091857560233787439
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3449,6 +3502,157 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6974398799664220290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1113631109818031538}
+  - component: {fileID: 2822491985015323774}
+  - component: {fileID: 4047961770842181618}
+  - component: {fileID: 7796983400555346083}
+  - component: {fileID: 530388649294684244}
+  m_Layer: 0
+  m_Name: EarthquakeAttackCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1113631109818031538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974398799664220290}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.07198321, y: -2.830584e-10, z: -0.000000003977165, w: 0.9974058}
+  m_LocalPosition: {x: -0, y: -0.5, z: 1}
+  m_LocalScale: {x: 5, y: 2, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8672500286529583592}
+  m_LocalEulerAnglesHint: {x: -8.256, y: 0, z: 0}
+--- !u!33 &2822491985015323774
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974398799664220290}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &4047961770842181618
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974398799664220290}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7796983400555346083
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974398799664220290}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.99999976, y: 1, z: 0.99999976}
+  m_Center: {x: 0.00003051757, y: 0, z: 0.00002288818}
+--- !u!114 &530388649294684244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974398799664220290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 767697672c04d5546ac21a77ffb0e279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTag: Player
+  damageOnStay: 0
+--- !u!1 &7372781920368572559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1025586773422173310}
+  m_Layer: 0
+  m_Name: EarthquakeSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1025586773422173310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7372781920368572559}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.07198321, y: -0, z: -0.0000000018626451, w: 0.9974058}
+  m_LocalPosition: {x: 0, y: -0.5, z: 1}
+  m_LocalScale: {x: 5, y: 2, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8672500286529583592}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7739510844475634137
 GameObject:
   m_ObjectHideFlags: 0
@@ -3867,8 +4071,38 @@ MonoBehaviour:
     baseAttackDamageScaling: 1
     flatMagicDamage: 0
     baseMagicDamageScaling: 0
-  abilityCooldown: 5
+  abilityCooldown: 2.5
   manaCost: 0
+  OnAbilityFire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381527548500631353}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayBasicAbilityFireSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAbilityHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381527548500631353}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayBasicAttackHitSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8688885131921075430
 GameObject:
   m_ObjectHideFlags: 0

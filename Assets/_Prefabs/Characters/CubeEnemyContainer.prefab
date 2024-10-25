@@ -828,9 +828,24 @@ MonoBehaviour:
     baseAttackDamageScaling: 0
     flatMagicDamage: 0
     baseMagicDamageScaling: 1
-  abilityCooldown: 10
+  abilityCooldown: 2
   manaCost: 0
-  projectilePrefab: {fileID: 1246318884732934483, guid: 8afd586c53a33934a94a85951b42593d, type: 3}
+  OnAbilityFire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381527548500631353}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlaySpecialAbilityFireSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  projectilePrefab: {fileID: 1246318884732934483, guid: 7fd9f9ef6f864b4429759c425f88007e, type: 3}
   spawnPos: {fileID: 4249970024965851656}
   yPositionOfProjectile: {fileID: 5382575297643104189}
 --- !u!1 &2666345720967422482
@@ -1043,14 +1058,7 @@ MonoBehaviour:
   container: {fileID: 851783967690526951}
   stoppingDistance: 2
   attackRotSpeed: 10
-  head: {fileID: 2222429465572844603}
-  detectionRadius: 10
-  detectionLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  obstacleLayers:
-    serializedVersion: 2
-    m_Bits: 64
+  detectionRadius: 15
   patrolPoints:
   - {fileID: 135803859861536876}
   - {fileID: 5875066126263236670}
@@ -1088,8 +1096,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   maxMana: 0
-  attackDamage: 5
-  magicDamage: 2
+  attackDamage: 10
+  magicDamage: 5
   armour: 0
   magicResistance: 0
   movementSpeed: 4
@@ -1107,7 +1115,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicAttackAudio: {fileID: 8300000, guid: b228be2bf7122e74fa0b0af9b5aa3993, type: 3}
+  basicAttackHitAudio: {fileID: 8300000, guid: a4b69348ab2120144bd21998481e5368, type: 3}
   specialAbilityAudio: {fileID: 8300000, guid: 1aaa9c29687f19e4d9cc375e140ca9e2, type: 3}
+  specialAbilityHitAudio: {fileID: 8300000, guid: b455f10f4eb6c414db6ef840e3ae0241, type: 3}
+  bossEarthquakeAudio: {fileID: 0}
 --- !u!82 &8091857560233787439
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1542,7 +1553,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4837428240920449664}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.70105743, y: -0.09229581, z: 0.092295766, w: 0.70105743}
+  m_LocalRotation: {x: 0.7057879, y: -0.043167815, z: 0.043167815, w: 0.7057879}
   m_LocalPosition: {x: 0.713, y: 0, z: 0.477}
   m_LocalScale: {x: 0.3, y: 0.5, z: 0.3}
   m_ConstrainProportionsScale: 0
@@ -1550,7 +1561,7 @@ Transform:
   - {fileID: 4249970024965851656}
   - {fileID: 63014969260932393}
   m_Father: {fileID: 8672500286529583592}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 15}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 7}
 --- !u!33 &6704845307976608251
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1710,6 +1721,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTag: Player
   damageOnStay: 0
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381527548500631353}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayBasicAttackHitSound
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &553621647871689566
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2140,5 +2166,20 @@ MonoBehaviour:
     baseAttackDamageScaling: 1
     flatMagicDamage: 0
     baseMagicDamageScaling: 0
-  abilityCooldown: 1
+  abilityCooldown: 2
   manaCost: 0
+  OnAbilityFire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381527548500631353}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayBasicAbilityFireSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

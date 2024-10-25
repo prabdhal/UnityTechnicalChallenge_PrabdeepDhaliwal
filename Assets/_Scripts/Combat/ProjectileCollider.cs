@@ -8,6 +8,8 @@ public class ProjectileCollider : AttackCollider
     private float speed;
     [SerializeField]
     private float deathTimer;
+    [SerializeField]
+    private bool deathOnHit = true;
 
     private Vector3 startPos;
     #endregion
@@ -17,7 +19,10 @@ public class ProjectileCollider : AttackCollider
     {
         startPos = transform.position;
 
-        OnHitTarget += Death;
+        if (deathOnHit)
+        {
+            OnHitTarget += Death;
+        }
     }
 
     public void Update()
@@ -30,6 +35,7 @@ public class ProjectileCollider : AttackCollider
     #region OnTrigger
     protected override void OnTriggerEnter(Collider other)
     {
+        // Destroy upon wall collision
         if (other.CompareTag(StringData.WallTag))
         {
             Death();
@@ -58,7 +64,7 @@ public class ProjectileCollider : AttackCollider
     }
     private void Death()
     {
-        Destroy(gameObject);
+        Destroy(gameObject);  
     }
     #endregion
 }
