@@ -157,6 +157,8 @@ public class PlayerController : MonoBehaviour
     #region Gravity
     private void ApplyGravity()
     {
+        isGrounded = CheckIfGrounded();
+
         if (isGrounded && playerVelocity.y < 0)
         {
             playerVelocity.y = -2f;     // keep player grounded
@@ -165,12 +167,17 @@ public class PlayerController : MonoBehaviour
         playerVelocity.y += gravity * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
+    private bool CheckIfGrounded()
+    {
+        float groundCheckDistance = 0.1f; // Tolerance distance for ground check
+        return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance);
+    }
     #endregion
 
     #region Jump
     private void JumpHandler()
     {
-        if (inputManager.IsJumpPressed)
+        if (isGrounded && inputManager.IsJumpPressed)
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }

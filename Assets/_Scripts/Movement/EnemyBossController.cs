@@ -1,14 +1,26 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyBossController : BaseEnemyController
 {
+    #region Fields
+    [SerializeField]
+    private BossDetectionZone detectionZone;
+    #endregion
 
     #region Init
     protected override void Start()
     {
-        base.Start();
+        agent = GetComponent<NavMeshAgent>();
+        stats = GetComponent<CharacterStats>();
+        anim = GetComponentInChildren<Animator>();
         agent.updateRotation = false;
+        detectionZone.OnBossZoneEnter += Setup;
         canAttack = true;
+    }
+    private void Setup(GameObject player)
+    {
+        this.player = player;
     }
     #endregion
     #region Update

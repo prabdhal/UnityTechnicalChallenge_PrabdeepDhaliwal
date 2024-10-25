@@ -7,12 +7,33 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Vector3 spawnAreaSize = new Vector3(5f, 0f, 5f); 
     [SerializeField] private int maxEnemies = 5; 
-    [SerializeField] private float spawnHeightOffset = 0.5f; // Height offset to ensure the enemy spawns on the ground
-    [SerializeField] private LootDrop lootDrop;
+    [SerializeField] private float spawnHeightOffset = 0.5f;
+    [SerializeField] private float spawnInterval = 5f; // Timer for spawning
 
     private List<BaseEnemyController> currentEnemies = new List<BaseEnemyController>();
+    private float spawnTimer;
     #endregion
 
+    #region Init & Update
+    private void Start()
+    {
+        spawnTimer = spawnInterval;
+    }
+
+    private void Update()
+    {
+        if (currentEnemies.Count < maxEnemies)
+        {
+            spawnTimer -= Time.deltaTime;
+
+            if (spawnTimer <= 0f)
+            {
+                SpawnEnemy();
+                spawnTimer = spawnInterval; // Reset the timer
+            }
+        }
+    }
+    #endregion
 
     #region Spawn Logic
     public void SpawnEnemy()
@@ -24,22 +45,16 @@ public class EnemySpawner : MonoBehaviour
         EnemyController controller = enemy.GetComponentInChildren<EnemyController>();
         controller.OnEnemyKilled += HandleEnemyDestroyed;
 
-        if (lootDrop != null)
-        {
-            controller.OnEnemyKilled += lootDrop.DropLoot;
-        }
-
-        enemy.transform.parent = transform; // Set the spawner as the parent of spawned enemy
+        enemy.transform.parent = transform;
 
         currentEnemies.Add(controller);
     }
-    public void DespawnEnemy()
-    {
-        if (currentEnemies.Count == 0) return;
 
-        for (int i = 0; i < currentEnemies.Count; i++)
+    public void DespawnAllEnemies()
+    {
+        foreach (var enemy in currentEnemies)
         {
-            currentEnemies[i].Kill();
+            enemy.Kill();
         }
         currentEnemies.Clear();
     }

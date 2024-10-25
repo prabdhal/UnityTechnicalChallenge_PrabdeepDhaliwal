@@ -82,7 +82,7 @@ public abstract class Ability : MonoBehaviour
         float attackSpeed = Mathf.Clamp(ownerStats.AttackSpeed, 0.3f, 3f);
         anim.SetFloat("attackSpeed", attackSpeed);
 
-        anim.SetTrigger(animationName);
+        anim.CrossFade(animationName, 0.05f);
     }
     #endregion
 

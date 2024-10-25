@@ -46,7 +46,7 @@ public class EnemySpawnManager : MonoBehaviour
         {
             if (spawner != null)
             {
-                spawner.DespawnEnemy();
+                spawner.DespawnAllEnemies();
             }
         }
     }
