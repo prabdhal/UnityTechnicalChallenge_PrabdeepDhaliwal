@@ -6,10 +6,11 @@ This project is a 3D action game where the player navigates a platform-based env
 ## How to Download and Play
 To download the project and play, follow these steps:
 
-- Click on the "Code" button on the project's GitHub repository.
-- Select "Download ZIP" from the dropdown menu.
-- Unzip the downloaded file and navigate to the UnityTechnicalChallenge_PrabdeepDhaliwal-master -> Builds -> Standalone_Build folder.
-- Open the .exe file to start the game.
+1. In the project's GitHub repository, locate the "Releases" section on the right panel and click on "Playable Desktop Build."
+2. Under "Assets," select "Standalone_Build.zip" to begin downloading the game files.
+3. Once the download is complete, extract the contents of "Standalone_Build.zip."
+4. Open the extracted folder and double-click on "NEX Level Gaming Challenge.exe" to launch the game.
+
 
 ## How to Play
 - **Movement**: Use the WASD keys (keyboard) or left stick (gamepad) to move.
