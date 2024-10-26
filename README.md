@@ -34,9 +34,9 @@ Mostly all assets, models, animations, particles, and sound effects were created
 - **Cinemachine**: Used for player camera control.
 - **NavMesh Agent**: Utilized for enemy pathfinding.
 - **Terrain Asset**: To create the map.
-- **Sound Effects**: Victory and Game Over sounds.
-- **Environment Rocks**: Used Unity's rock prefabs.
-- **Lava Texture**: Used a water texture.
+- **Sound Effects**: Victory and Game Over sounds only.
+- **Environment Rocks**: Rock prefabs.
+- **Lava Texture**: Water texture for the lava.
 
 ## Known Issues
 - None known as of yet.
