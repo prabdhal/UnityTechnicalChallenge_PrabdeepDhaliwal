@@ -145,9 +145,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnAbilityHit:
-    m_PersistentCalls:
-      m_Calls: []
   projectilePrefab: {fileID: 1246318884732934483, guid: 5c1cd5f304a63a545900a846c56b1f43, type: 3}
   spawnPos: {fileID: 1025586773422173310}
   yPositionOfProjectile: {fileID: 5382575297643104189}
@@ -1236,7 +1233,7 @@ MonoBehaviour:
     baseAttackDamageScaling: 0
     flatMagicDamage: 0
     baseMagicDamageScaling: 1
-  abilityCooldown: 4
+  abilityCooldown: 8
   manaCost: 0
   OnAbilityFire:
     m_PersistentCalls:
@@ -1244,21 +1241,6 @@ MonoBehaviour:
       - m_Target: {fileID: 4381527548500631353}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
         m_MethodName: PlaySpecialAbilityFireSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnAbilityHit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4381527548500631353}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: PlaySpecialAbilityHitSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1900,6 +1882,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTag: Player
   damageOnStay: 0
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &4056567004725520002
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2249,7 +2234,7 @@ MonoBehaviour:
   magicDamage: 30
   armour: 5
   magicResistance: 2
-  movementSpeed: 2
+  movementSpeed: 3.5
   attackSpeed: 1
 --- !u!114 &4381527548500631353
 MonoBehaviour:
@@ -3622,6 +3607,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTag: Player
   damageOnStay: 0
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7372781920368572559
 GameObject:
   m_ObjectHideFlags: 0
@@ -4079,21 +4067,6 @@ MonoBehaviour:
       - m_Target: {fileID: 4381527548500631353}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
         m_MethodName: PlayBasicAbilityFireSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnAbilityHit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4381527548500631353}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: PlayBasicAttackHitSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

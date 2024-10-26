@@ -67,16 +67,32 @@ public class GameUIManager : MonoBehaviour
     [Header("Game Over UI")]
     public ItemMessageHud itemMessagesHud;
 
+    [Header("Audio Settings")]
+    [SerializeField]
+    private AudioClip gameOverSound;
+    [SerializeField]
+    private AudioClip victorySound;
+    [SerializeField]
+    private AudioClip bossRoundClip;
+
+    private AudioSource audioSource;
+
     private bool IsPaused => pauseMenu.activeInHierarchy || controlsMenu.activeInHierarchy || statsMenu.activeInHierarchy;
     private bool uiActive => IsPaused || gameOverMenu.activeInHierarchy;
     private bool IsGameOver => gameOverMenu.activeInHierarchy || victoryMenu.activeInHierarchy;
 
+    private BossDetectionZone bossDetectionZone;    // optional for audio
     private PlayerInputManager inputManager;    // required for deteching pause press
     #endregion
 
     #region Init & Update
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        bossDetectionZone = FindObjectOfType<BossDetectionZone>();
+        if (bossDetectionZone != null)
+            bossDetectionZone.OnBossZoneEnter += PlayBossRoundSound;
+
         // Pause menu
         resumeButton.onClick.AddListener(OnPause);
         controlsButton.onClick.AddListener(OnControls);
@@ -241,12 +257,17 @@ public class GameUIManager : MonoBehaviour
     {
         HideAllMenus();
         ToggleGameOverMenu(true);
+        audioSource.clip = gameOverSound;
+        audioSource.Play();
+
     }
     // Fire on boss death 
     public void OnVictory()
     {
         HideAllMenus();
         ToggleVictoryMenu(true);
+        audioSource.clip = victorySound;
+        audioSource.Play();
     }
     private void OnQuit()
     {
@@ -260,6 +281,14 @@ public class GameUIManager : MonoBehaviour
         ToggleVictoryMenu(false);
         ToggleControlsMenu(false);
         ToggleStatsMenu(false);
+    }
+    #endregion
+
+    #region Sound
+    private void PlayBossRoundSound(GameObject go)
+    {
+        audioSource.clip = bossRoundClip;
+        audioSource.Play();
     }
     #endregion
 }
