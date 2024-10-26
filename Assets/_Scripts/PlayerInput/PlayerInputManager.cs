@@ -28,7 +28,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool BasicAttackPressed => basicAttackAction.triggered && !IsGamePaused;
     public bool SpecialAbilityPressed => specialAbilityAction.triggered && !IsGamePaused;
     public bool IsPaused => pauseAction.triggered;
-    public bool IsTargetLocked => targetLockAction.ReadValue<float>() > 0;
+    public bool IsTargetLocked => targetLockAction.triggered;
     public bool IsGamePaused => Time.timeScale == 0;
     #endregion
 

@@ -72,16 +72,13 @@ public class GameUIManager : MonoBehaviour
     private AudioClip gameOverSound;
     [SerializeField]
     private AudioClip victorySound;
-    [SerializeField]
-    private AudioClip bossRoundClip;
 
     private AudioSource audioSource;
 
     private bool IsPaused => pauseMenu.activeInHierarchy || controlsMenu.activeInHierarchy || statsMenu.activeInHierarchy;
-    private bool uiActive => IsPaused || gameOverMenu.activeInHierarchy;
+    private bool uiActive => IsPaused || IsGameOver;
     private bool IsGameOver => gameOverMenu.activeInHierarchy || victoryMenu.activeInHierarchy;
 
-    private BossDetectionZone bossDetectionZone;    // optional for audio
     private PlayerInputManager inputManager;    // required for deteching pause press
     #endregion
 
@@ -89,9 +86,6 @@ public class GameUIManager : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        bossDetectionZone = FindObjectOfType<BossDetectionZone>();
-        if (bossDetectionZone != null)
-            bossDetectionZone.OnBossZoneEnter += PlayBossRoundSound;
 
         // Pause menu
         resumeButton.onClick.AddListener(OnPause);
@@ -281,14 +275,6 @@ public class GameUIManager : MonoBehaviour
         ToggleVictoryMenu(false);
         ToggleControlsMenu(false);
         ToggleStatsMenu(false);
-    }
-    #endregion
-
-    #region Sound
-    private void PlayBossRoundSound(GameObject go)
-    {
-        audioSource.clip = bossRoundClip;
-        audioSource.Play();
     }
     #endregion
 }
