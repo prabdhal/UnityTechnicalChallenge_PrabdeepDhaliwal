@@ -23,6 +23,7 @@ The game ends when the player defeats the boss, with a "Victory" message display
     - **Disc Enemy**: Damage-over-time and multi-projectile attacks.
     - **Cylinder Enemy**: Cannon-based attacks and a combo sequence.
   - **Boss**: Three unique abilities, including melee, projectile, and area-of-effect attacks.
+- **Enemy Spawner System**: Each enemy spawns with a maximum number of enemies set, respawning after death. A timer controls the spawn delay between each spawn.
 - **Game Over Condition**: Victory on defeating the boss, and Game Over on player defeat, with appropriate sound effects.
 - **Sound Effects**: Custom sound effects for actions like projectile firing, hits, and the game over/victory.
 - **Target Lock System**: Assists with locking onto enemies for smoother gameplay.
@@ -40,5 +41,12 @@ Mostly all assets, models, animations, particles, and sound effects were created
 
 ## Known Issues
 - None known as of yet.
+
+## Potential Optimizations
+- **Target Lock System**: Improve the target lock system by ensuring the camera rotates to face the target immediately. Additionally, limit the horizontal view to keep the target always in sight, enhancing gameplay clarity.
+- **Performance Optimization**: Implement object pooling for projectiles and frequently instantiated objects to reduce memory allocation and improve overall performance.
+- **Sound Management**: Optimize audio playback by using an audio manager that controls volume levels and prioritizes important sounds during intense combat situations.
+- **Dynamic Difficulty Adjustment**: Introduce a system that scales enemy difficulty based on player performance, ensuring a balanced challenge throughout the game.
+
 
 Enjoy navigating through the game, defeating enemies, and claiming victory over the boss!
