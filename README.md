@@ -3,6 +3,15 @@
 ## Overview
 This project is a 3D action game where the player navigates a platform-based environment, fighting through minion enemies to reach and defeat a boss. The game features smooth and responsive controls, unique enemy behaviors, and a variety of combat mechanics. The goal is to defeat the final boss, with an option to enhance the player's stats by defeating minions along the way.
 
+## How to Download and Play
+To download the project and play, follow these steps:
+
+1. In the project's GitHub repository, locate the "Releases" section on the right panel and click on "Playable Desktop Build."
+2. Under "Assets," select "Standalone_Build.zip" to begin downloading the game files.
+3. Once the download is complete, extract the contents of "Standalone_Build.zip."
+4. Open the extracted folder and double-click on "NEX Level Gaming Challenge.exe" to launch the game.
+
+
 ## How to Play
 - **Movement**: Use the WASD keys (keyboard) or left stick (gamepad) to move.
 - **Camera Look**: Control the camera with the mouse (keyboard) or right joystick (gamepad).
