@@ -3,6 +3,14 @@
 ## Overview
 This project is a 3D action game where the player navigates a platform-based environment, fighting through minion enemies to reach and defeat a boss. The game features smooth and responsive controls, unique enemy behaviors, and a variety of combat mechanics. The goal is to defeat the final boss, with an option to enhance the player's stats by defeating minions along the way.
 
+## How to Download and Play
+To download the project and play, follow these steps:
+
+- Click on the "Code" button on the project's GitHub repository.
+- Select "Download ZIP" from the dropdown menu.
+- Unzip the downloaded file and navigate to the UnityTechnicalChallenge_PrabdeepDhaliwal-master -> Builds -> Standalone_Build folder.
+- Open the .exe file to start the game.
+
 ## How to Play
 - **Movement**: Use the WASD keys (keyboard) or left stick (gamepad) to move.
 - **Camera Look**: Control the camera with the mouse (keyboard) or right joystick (gamepad).
